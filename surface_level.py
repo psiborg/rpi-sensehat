@@ -36,22 +36,6 @@ def get_bubble_position(pitch, roll):
 
     return x, y
 
-'''
-# Note: This first attempt was incorrect
-def get_bubble_position(pitch, roll):
-    sensitivity = 4.0
-
-    x = 3.5 + (roll / 90) * sensitivity
-    x = max(0, min(7, x))  # Ensure x is within [0,7]
-    x = int(round(x))
-
-    y = 3.5 + (pitch / 90) * sensitivity
-    y = max(0, min(7, y))  # Ensure y is within [0,7]
-    y = int(round(y))
-
-    return x, y
-'''
-
 try:
     print ("To quit, press Ctrl+C")
 
