@@ -9,69 +9,44 @@
 # ========================================================================
 
 from sense_hat import SenseHat
-import time
+from time import sleep
 import random
 
 sense = SenseHat()
-sense.clear()
 
-# Define colors (from bright to dim)
-colors = [
-    (255, 0, 0),   # Full brightness red
-    (192, 0, 0),   # Slightly dimmer red
-    (128, 0, 0),   # Dim red
-    (64, 0, 0),    # Very dim red
-    (32, 0, 0),    # Almost off red
-    (16, 0, 0),    # Barely visible red
-    (8, 0, 0),     # Very faint red
-    (0, 0, 0)      # Off
-]
+# Define colors with varying brightness
+red_high = [255, 0, 0]
+red_medium = [150, 0, 0]
+red_low = [75, 0, 0]
+off = [0, 0, 0]
 
-def draw_bar(column, height, max_height, is_main=True):
-    mid = 3  # Middle row index (y=3 and y=4 are the center rows)
+def draw_voice_box(height, speed):
+    # Initialize all LEDs to off
+    pixels = [off] * 64
 
-    # Clear the column
-    for y in range(8):
-        sense.set_pixel(column, y, colors[-1])
+    if height > 0:
+        # Draw expanding bars based on the height
+        for col in [3, 4]:
+            for row in range(3 - height//2, 4 + height//2):
+                pixels[row*8 + col] = red_high if row in [3, 4] else red_medium
 
-    # Draw the bar with decreasing brightness
-    half_height = height // 2
-    for i in range(half_height + 1):
-        if mid - i >= 0:
-            sense.set_pixel(column, mid - i, colors[i])
-        if mid + i < 8:
-            sense.set_pixel(column, mid + i, colors[i])
+        for col in [1, 2, 5, 6]:
+            for row in range(4 - height//2, 3 + height//2):
+                pixels[row*8 + col] = red_low
 
-    # Fill extra height for odd heights
-    if is_main and height % 2 != 0:
-        if mid + half_height + 1 < 8:
-            sense.set_pixel(column, mid + half_height + 1, colors[half_height])
-
-def kitt_voice_box():
-    main_columns = [3, 4]  # Main bars in the center
-    side_columns = [1, 2, 5, 6]  # Side bars
-
-    while True:
-        # Generate random height for main bars
-        main_height = random.randint(3, 8)  # Random height between 3 and 8
-
-        # Calculate corresponding height for side bars
-        side_height = max(1, main_height // 2)  # Side bars are half the height of main bars
-
-        # Draw the main bars
-        for column in main_columns:
-            draw_bar(column, main_height, main_height, is_main=True)
-
-        # Draw the side bars
-        for column in side_columns:
-            draw_bar(column, side_height, main_height, is_main=False)
-
-        time.sleep(0.2)  # Adjust speed as needed
+    # Update the LED matrix
+    sense.set_pixels(pixels)
+    sleep(speed)
 
 try:
-    print ("To quit, press Ctrl+C")
+    print("To quit, press Ctrl+C")
 
-    kitt_voice_box()
+    while True:
+        # Randomize height (0, 2, 4, or 6 pixels) and speed (0.05 to 0.3 seconds)
+        height = random.choice([0, 2, 4, 6])
+        speed = random.uniform(0.05, 0.3)
+
+        draw_voice_box(height, speed)
 
 except KeyboardInterrupt:
     sense.clear()
