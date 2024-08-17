@@ -15,14 +15,14 @@ sense = SenseHat()
 
 # Define the color ranges with names and hex codes
 colors = [
-    (-20, -11, (1, 144, 240), "#0190F0", "Extreme cold"),
-    (-10, 1, (0, 190, 252), "#00BEFC", "Very cold"),
-    (0, 9, (80, 205, 160), "#50CDA0", "Cold"),
-    (10, 19, (169, 231, 81), "#A9E751", "Cool"),
-    (20, 29, (254, 253, 0), "#FEFD00", "Brisk"),
-    (30, 34, (247, 124, 1), "#F77C01", "Warm"),
-    (35, 39, (250, 125, 0), "#FA7D00", "Hot"),
-    (40, 49, (248, 0, 0), "#F80000", "Very hot"),
+    (-20, -10.01, (1, 144, 240), "#0190F0", "Extreme cold"),
+    (-10, 0.99, (0, 190, 252), "#00BEFC", "Very cold"),
+    (0, 9.99, (80, 205, 160), "#50CDA0", "Cold"),
+    (10, 19.99, (169, 231, 81), "#A9E751", "Cool"),
+    (20, 29.99, (254, 253, 0), "#FEFD00", "Brisk"),
+    (30, 34.99, (247, 124, 1), "#F77C01", "Warm"),
+    (35, 39.99, (250, 125, 0), "#FA7D00", "Hot"),
+    (40, 49.99, (248, 0, 0), "#F80000", "Very hot"),
     (50, 100, (185, 0, 0), "#B90000", "Extreme heat")
 ]
 
@@ -39,7 +39,8 @@ try:
         temp = sense.get_temperature()
         color, hex_color, color_name = get_color(temp)
         #print(f"Temperature: {temp:.2f}°C, RGB: {color}, Hex: {hex_color}, Color: {color_name}")
-        print(f"Temperature: {temp:.2f}°C, {color_name}")
+        #print(f"Temperature: {temp:.2f}°C, {color_name}")
+        print(temp)
 
         if temp >= 50:
             # Flashing effect
