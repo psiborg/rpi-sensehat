@@ -2,7 +2,7 @@
 # ========================================================================
 # rainbow0.py
 #
-# Description:
+# Description: Display solid rainbow colors.
 #
 # Author: Jim Ing
 # Date: 2024-08-15

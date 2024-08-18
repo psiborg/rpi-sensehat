@@ -2,7 +2,8 @@
 # ========================================================================
 # rainbow2.py
 #
-# Description: Display random rainbow colors in a linear sequence.
+# Description: Display gradient of random rainbow colors in a linear
+#              sequence.
 #
 # Author: Jim Ing
 # Date: 2024-08-15

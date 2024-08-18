@@ -2,7 +2,7 @@
 # ========================================================================
 # rainbow1.py
 #
-# Description: Display rainbow colors in a linear sequence.
+# Description: Display gradient of rainbow colors in a linear sequence.
 #
 # Author: Jim Ing
 # Date: 2024-08-15
