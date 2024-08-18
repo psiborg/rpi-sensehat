@@ -2,10 +2,10 @@
 # ========================================================================
 # sprites_show.py
 #
-# Description:
+# Description: Display image sprites in a slideshow.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 import random
@@ -84,7 +84,7 @@ def show_all():
 # ------------------------------------------------------------------------
 
 sense = SenseHat()
-sense.low_light = True
+#sense.low_light = True
 #sense.set_rotation(180)
 #sense.clear()
 

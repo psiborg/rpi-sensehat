@@ -2,10 +2,10 @@
 # ========================================================================
 # kitt_scanner2.py
 #
-# Description: Simulate LEDs from KITT's scanner
+# Description: KITT's scanner with trailing LEDs.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 from sense_hat import SenseHat
@@ -50,7 +50,6 @@ def kitt_scanner_with_trail():
 
 try:
     print ("To quit, press Ctrl+C")
-
     kitt_scanner_with_trail()
 
 except KeyboardInterrupt:

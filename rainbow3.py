@@ -5,7 +5,7 @@
 # Description: Randomly display a matrix of rainbow colors.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 import colorsys
@@ -16,19 +16,19 @@ from sense_hat import SenseHat
 sense = SenseHat()
 sense.clear()
 
-# Step 1: Create a list of all positions
+# Create a list of all positions
 positions = [(x, y) for x in range(8) for y in range(8)]
 
-# Step 2: Shuffle the positions to randomize the order
+# Shuffle the positions to randomize the order
 random.shuffle(positions)
 
-# Step 3: Set pixels in random order
+# Set pixels in random order
 for x, y in positions:
     # Calculate the hue based on the position (x, y)
-    hue = (x * 8 + y) / 64.0  # Range from 0 to 1
+    hue = (x * 8 + y) / 64.0 # Range from 0 to 1
 
     # Convert HSV to RGB
-    r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)  # Full saturation and value
+    r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0) # Full saturation and value
 
     # Convert RGB values to 0-255 range
     r = int(r * 255)

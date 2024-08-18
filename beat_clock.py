@@ -2,10 +2,12 @@
 # ========================================================================
 # beat_clock.py
 #
-# Description:
+# Description: Display Swatch Internet Time (.beat).
+#
+# https://www.swatch.com/en-us/internet-time.html
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-16
 # ========================================================================
 
 from sense_hat import SenseHat

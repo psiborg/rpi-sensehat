@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
+#
+# ========================================================================
+# joystick.py
+#
+# Description: Use the joystick to move a white dot on the LED screen.
+#
 # https://sense-hat.readthedocs.io/en/latest/api/#direction_up-direction_left-direction_right-direction_down-direction_middle-direction_any
+#
+# Author: Jim Ing
+# Date: 2024-08-15
+# ========================================================================
 
 from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 from signal import pause

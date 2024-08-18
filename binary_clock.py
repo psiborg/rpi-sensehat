@@ -2,10 +2,10 @@
 # ========================================================================
 # binary_clock.py
 #
-# Description:
+# Description: Display a binary clock.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 from sense_hat import SenseHat
@@ -21,21 +21,20 @@ blue = (0, 0, 255)   # Blue for seconds
 inactive = (0, 0, 0) # Off for binary 0
 
 def display_binary(value, col_start, bits, color):
-    """Display a binary value on the LED matrix with a specific color."""
-    binary_str = f'{value:0{bits}b}'  # Convert to binary string with a fixed number of bits
+    # Display a binary value on the LED matrix with a specific color.
+    binary_str = f'{value:0{bits}b}' # Convert to binary string with a fixed number of bits
     for i in range(bits):
         bit = int(binary_str[i])
         # Place the bit on the corresponding column with the specified color
         sense.set_pixel(col_start, 7 - i, color if bit else inactive)
 
 def display_time():
-    """Display the current time in binary on the Sense HAT 8x8 matrix."""
+    # Display the current time in binary on the Sense HAT 8x8 matrix.
     now = datetime.now()
     hour = now.hour
     minute = now.minute
     second = now.second
 
-    # Clear the display
     sense.clear()
 
     # Display hours (5 bits) in red
@@ -51,7 +50,7 @@ try:
     print ("To quit, press Ctrl+C")
     while True:
         display_time()
-        time.sleep(1)  # Update every second
+        time.sleep(1) # Update every second
 
 finally:
     sense.clear()

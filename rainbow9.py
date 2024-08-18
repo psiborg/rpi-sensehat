@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # ========================================================================
-# rainbow5.py
+# rainbow9.py
 #
-# Description: Display rainbow colors in a spiral pattern.
+# Description: Display rainbow colors in a spiral pattern then animates
+#              each pixel to the next color.
 #
 # Author: Jim Ing
-# Date: 2024-08-15
+# Date: 2024-08-17
 # ========================================================================
 
 import colorsys
@@ -35,21 +36,36 @@ spiral_order = [
     (7, 3), (7, 2), (7, 1), (7, 0)
 ]
 
-# Iterate through the spiral order
+# Draw the initial rainbow colors on the matrix
+colors = []
 for i, (x, y) in enumerate(spiral_order):
-    # Calculate the hue based on the index
-    hue = i / 64.0 # Range from 0 to 1
-
-    # Convert HSV to RGB
-    r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0) # Full saturation and value
-
-    # Convert RGB values to 0-255 range
+    hue = i / 64.0
+    r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)
     r = int(r * 255)
     g = int(g * 255)
     b = int(b * 255)
-
-    # Set the pixel on the Sense HAT
     sense.set_pixel(x, y, r, g, b)
+    colors.append((r, g, b)) # Save the color for later
 
-    # Add a delay
-    time.sleep(0.1)
+# Pause to display the initial pattern
+time.sleep(2)
+
+# Continuous animation
+try:
+    print("To quit, press Ctrl+C")
+
+    while True:
+        # Change each pixel to the next color in the sequence
+        new_colors = [colors[(i + 1) % len(colors)] for i in range(len(colors))]
+
+        for i, (x, y) in enumerate(spiral_order):
+            sense.set_pixel(x, y, new_colors[i])
+
+        # Update the colors list to the new colors
+        colors = new_colors
+
+        # Short delay to control the speed of the animation
+        time.sleep(0.2)
+
+except KeyboardInterrupt:
+    sense.clear()

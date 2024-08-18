@@ -2,10 +2,11 @@
 # ========================================================================
 # kitt_scanner1.py
 #
-# Description: Simulate LEDs from KITT's scanner
+# Description: Simulate the front-mounted scanner (anamorphic equalizer)
+#              from Knight Rider's KITT.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 from sense_hat import SenseHat
@@ -33,7 +34,6 @@ def kitt_scanner():
 
 try:
     print ("To quit, press Ctrl+C")
-
     kitt_scanner()
 
 except KeyboardInterrupt:

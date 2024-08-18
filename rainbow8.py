@@ -6,7 +6,7 @@
 #              360 degrees and then rotates back.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-16
 # ========================================================================
 
 import colorsys
@@ -43,7 +43,7 @@ def display_rotating_pattern(angle):
             hue = ((rotated_x + rotated_y) % 8) / 8.0
 
             # Convert HSV to RGB
-            r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)  # Full saturation and value
+            r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0) # Full saturation and value
 
             # Convert RGB values to 0-255 range
             r = int(r * 255)
@@ -56,25 +56,31 @@ def display_rotating_pattern(angle):
 def pause_if_corner(angle):
     # Check if the angle is close to a corner (0°, 90°, 180°, 270°)
     if angle % 90 == 0:
-        time.sleep(2)  # Pause for 2 seconds
+        time.sleep(2) # Pause for 2 seconds
 
-while True:
-    # Rotate pattern forward
-    for i in range(0, 360, 5):  # Rotate in 5-degree increments
-        angle = math.radians(i)
-        display_rotating_pattern(angle)
-        pause_if_corner(i)
-        time.sleep(0.1)  # Control the speed of rotation
+try:
+    print("To quit, press Ctrl+C")
 
-    # 5-second pause before rotating back
-    time.sleep(5)
+    while True:
+        # Rotate pattern forward
+        for i in range(0, 360, 5): # Rotate in 5-degree increments
+            angle = math.radians(i)
+            display_rotating_pattern(angle)
+            pause_if_corner(i)
+            time.sleep(0.1) # Control the speed of rotation
 
-    # Rotate pattern backward
-    for i in range(360, 0, -5):  # Rotate back in 5-degree increments
-        angle = math.radians(i)
-        display_rotating_pattern(angle)
-        pause_if_corner(i)
-        time.sleep(0.1)  # Control the speed of rotation
+        # 5-second pause before rotating back
+        time.sleep(5)
 
-    # 5-second pause before starting again
-    time.sleep(5)
+        # Rotate pattern backward
+        for i in range(360, 0, -5): # Rotate back in 5-degree increments
+            angle = math.radians(i)
+            display_rotating_pattern(angle)
+            pause_if_corner(i)
+            time.sleep(0.1) # Control the speed of rotation
+
+        # 5-second pause before starting again
+        time.sleep(5)
+
+except KeyboardInterrupt:
+    sense.clear()

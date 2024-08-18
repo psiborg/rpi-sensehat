@@ -2,10 +2,10 @@
 # ========================================================================
 # kitt_voice.py
 #
-# Description: Simulate LEDs from KITT's voice box
+# Description: Simulate the voice module from Knight Rider's KITT.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 from sense_hat import SenseHat

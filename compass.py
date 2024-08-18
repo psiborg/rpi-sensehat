@@ -2,10 +2,10 @@
 # ========================================================================
 # compass.py
 #
-# Description:
+# Description: Reads the compass and displays an arrow pointing to north.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-17
 # ========================================================================
 
 from sense_hat import SenseHat
@@ -14,8 +14,8 @@ import time
 sense = SenseHat()
 
 # Define colors
-W = (255, 255, 255)  # White
-K = (0, 0, 0)        # Black
+W = (255, 255, 255) # White
+K = (0, 0, 0)       # Black
 
 # Define the arrow sprites
 arrow_sprites = {
@@ -130,7 +130,7 @@ def main():
     while True:
         direction = get_direction()
         display_arrow(arrow_sprites[direction])
-        time.sleep(1)  # Update display every 1 second
+        time.sleep(1) # Update display every 1 second
 
 if __name__ == "__main__":
     try:

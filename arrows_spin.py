@@ -2,10 +2,10 @@
 # ========================================================================
 # arrows_spin.py
 #
-# Description:
+# Description: Display spinning arrows for a compass.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-17
 # ========================================================================
 
 from sense_hat import SenseHat
@@ -124,7 +124,6 @@ def display_animation(sense, arrows, delay=1):
             sense.set_pixels(arrow)
             time.sleep(delay)
 
-# Run the animation
 try:
     print ("To quit, press Ctrl+C")
     display_animation(sense, arrows)

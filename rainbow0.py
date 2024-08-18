@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # ========================================================================
-# rainbow.py
+# rainbow0.py
 #
 # Description:
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 from sense_hat import SenseHat

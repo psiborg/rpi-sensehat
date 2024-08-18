@@ -1,12 +1,12 @@
 # ========================================================================
 # stardate.py
 #
+# Description: Stardate class.
+#
 # https://stardatecalculator.com/
 #
-# Description:
-#
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-16
 # ========================================================================
 
 from datetime import datetime, timedelta

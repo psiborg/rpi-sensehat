@@ -6,7 +6,7 @@
 #              in reverse order.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 import colorsys
@@ -39,10 +39,10 @@ spiral_order = [
 # Iterate through the spiral order to light up the pixels
 for i, (x, y) in enumerate(spiral_order):
     # Calculate the hue based on the index
-    hue = i / 64.0  # Range from 0 to 1
+    hue = i / 64.0 # Range from 0 to 1
 
     # Convert HSV to RGB
-    r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)  # Full saturation and value
+    r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0) # Full saturation and value
 
     # Convert RGB values to 0-255 range
     r = int(r * 255)

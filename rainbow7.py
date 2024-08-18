@@ -5,7 +5,7 @@
 # Description: Display rainbow colors in a diagonal pattern.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-16
 # ========================================================================
 
 import colorsys
@@ -18,10 +18,10 @@ sense.clear()
 for x in range(8):
     for y in range(8):
         # Calculate the hue based on the sum of the x and y coordinates
-        hue = ((x + y) % 8) / 8.0  # Adjusted to create a diagonal gradient
+        hue = ((x + y) % 8) / 8.0 # Adjusted to create a diagonal gradient
 
         # Convert HSV to RGB
-        r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)  # Full saturation and value
+        r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0) # Full saturation and value
 
         # Convert RGB values to 0-255 range
         r = int(r * 255)

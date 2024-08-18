@@ -2,10 +2,10 @@
 # ========================================================================
 # sprites_joystick.py
 #
-# Description:
+# Description: Display image sprites using the joystick to navigate.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 import random
@@ -42,7 +42,7 @@ def pushed_up(event):
         print("Up")
         global current_group_index, current_image_index
         current_group_index = (current_group_index - 1) % len(groups)
-        current_image_index = 0  # Reset to the first image in the new group
+        current_image_index = 0 # Reset to the first image in the new group
         show_sprite()
 
 def pushed_down(event):
@@ -50,7 +50,7 @@ def pushed_down(event):
         print("Down")
         global current_group_index, current_image_index
         current_group_index = (current_group_index + 1) % len(groups)
-        current_image_index = 0  # Reset to the first image in the new group
+        current_image_index = 0 # Reset to the first image in the new group
         show_sprite()
 
 def pushed_left(event):

@@ -5,7 +5,7 @@
 # Description: Display rainbow colors in a linear sequence.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
 
 import colorsys
@@ -21,7 +21,7 @@ for x in range(8):
         hue = (x * 8 + y) / 64.0  # Range from 0 to 1
 
         # Convert HSV to RGB
-        r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)  # Full saturation and value
+        r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0) # Full saturation and value
 
         # Convert RGB values to 0-255 range
         r = int(r * 255)

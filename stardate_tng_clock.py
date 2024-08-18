@@ -2,10 +2,10 @@
 # ========================================================================
 # stardate_tng_clock.py
 #
-# Description:
+# Description: Simulate the Stardate from Star Trek: The Next Generation.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-16
 # ========================================================================
 
 import time
@@ -36,7 +36,7 @@ try:
 
     while True:
         display_stardate()
-        time.sleep(60)  # Update every minute
+        time.sleep(60) # Update every minute
 
 except KeyboardInterrupt:
     sense.clear()

@@ -2,11 +2,10 @@
 # ========================================================================
 # kitt_scanner3.py
 #
-# Description: Simulate LEDs from KITT's scanner and allows the user to
-#              choose a custom color.
+# Description: KITT's scanner in selectable colors.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-16
 # ========================================================================
 
 from sense_hat import SenseHat
@@ -47,8 +46,8 @@ else:
 print(f"You selected {selected_color_name}.")
 
 # Dimmed versions of the selected color
-dim_color1 = tuple(int(c / 2) for c in main_color)  # Less bright
-dim_color2 = tuple(int(c / 4) for c in main_color)  # Even dimmer
+dim_color1 = tuple(int(c / 2) for c in main_color) # Less bright
+dim_color2 = tuple(int(c / 4) for c in main_color) # Even dimmer
 off = (0, 0, 0)  # Turn off pixel
 
 def kitt_scanner_with_trail():
@@ -81,7 +80,6 @@ def kitt_scanner_with_trail():
 
 try:
     print("To quit, press Ctrl+C")
-
     kitt_scanner_with_trail()
 
 except KeyboardInterrupt:

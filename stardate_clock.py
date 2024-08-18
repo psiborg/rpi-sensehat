@@ -2,13 +2,10 @@
 # ========================================================================
 # stardate_clock.py
 #
-# Description: In "Star Trek: The Next Generation," Stardate is a
-#              fictional timekeeping system. The exact formula is not
-#              clearly defined in the series, but there is a commonly
-#              accepted approximation based on the Gregorian calendar.
+# Description: Stardate is a fictional timekeeping system from Star Trek.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-16
 # ========================================================================
 
 from sense_hat import SenseHat

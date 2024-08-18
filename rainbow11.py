@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # ========================================================================
-# rainbow5.py
+# rainbow11.py
 #
-# Description: Display rainbow colors in a spiral pattern.
+# Description: Display rainbow colors in a spiral pattern followed by a
+#              white dot "chaser".
 #
 # Author: Jim Ing
-# Date: 2024-08-15
+# Date: 2024-08-17
 # ========================================================================
 
 import colorsys
@@ -35,7 +36,10 @@ spiral_order = [
     (7, 3), (7, 2), (7, 1), (7, 0)
 ]
 
-# Iterate through the spiral order
+# Store the original colors of the spiral pattern
+original_colors = []
+
+# Iterate through the spiral order to light up the pixels with their respective colors
 for i, (x, y) in enumerate(spiral_order):
     # Calculate the hue based on the index
     hue = i / 64.0 # Range from 0 to 1
@@ -48,8 +52,34 @@ for i, (x, y) in enumerate(spiral_order):
     g = int(g * 255)
     b = int(b * 255)
 
+    # Save the original color to restore later
+    original_colors.append((r, g, b))
+
     # Set the pixel on the Sense HAT
     sense.set_pixel(x, y, r, g, b)
 
-    # Add a delay
-    time.sleep(0.1)
+try:
+    print("To quit, press Ctrl+C")
+
+    # Animate the white dot following the spiral pattern
+    while True:
+        for i, (x, y) in enumerate(spiral_order):
+            # Restore the previous pixel's color (except for the first iteration)
+            if i > 0:
+                prev_x, prev_y = spiral_order[i - 1]
+                prev_color = original_colors[i - 1]
+                sense.set_pixel(prev_x, prev_y, prev_color[0], prev_color[1], prev_color[2])
+
+            # Set the current pixel to white
+            sense.set_pixel(x, y, 255, 255, 255)
+
+            # Add a delay
+            time.sleep(0.1)
+
+        # Restore the last pixel color after the loop
+        last_x, last_y = spiral_order[-1]
+        last_color = original_colors[-1]
+        sense.set_pixel(last_x, last_y, last_color[0], last_color[1], last_color[2])
+
+except KeyboardInterrupt:
+    sense.clear()

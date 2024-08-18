@@ -2,21 +2,17 @@
 # ========================================================================
 # kitt_voice_live.py
 #
-# Description: KITT's voice box for mic input
+# Description: KITT's voice box for mic input.
 #
 # Author: Jim Ing
-# Date: 2024-08-13
+# Date: 2024-08-15
 # ========================================================================
-
-# Install Required Libraries:
-# pip install pyaudio numpy
 
 import numpy as np
 import pyaudio
 from sense_hat import SenseHat
 from time import sleep
 
-# Initialize Sense HAT
 sense = SenseHat()
 
 # Define colors with varying brightness
@@ -26,10 +22,10 @@ red_low = [75, 0, 0]
 off = [0, 0, 0]
 
 # PyAudio configuration
-CHUNK = 1024  # Number of audio samples per frame
-FORMAT = pyaudio.paInt16  # Audio format (16-bit PCM)
-CHANNELS = 1  # Mono audio
-RATE = 44100  # Sampling rate (samples per second)
+CHUNK = 1024             # Number of audio samples per frame
+FORMAT = pyaudio.paInt16 # Audio format (16-bit PCM)
+CHANNELS = 1             # Mono audio
+RATE = 44100             # Sampling rate (samples per second)
 
 # Initialize PyAudio
 p = pyaudio.PyAudio()
@@ -63,12 +59,14 @@ def draw_voice_box(height):
     sense.set_pixels(pixels)
 
 try:
+    print("To quit, press Ctrl+C")
+
     while True:
         # Get the audio level from the microphone
         level = get_audio_level()
 
         # Normalize the level to a height between 0 and 6
-        height = min(6, max(0, int(level / 5000)))  # Adjust the divisor based on sensitivity
+        height = min(6, max(0, int(level / 5000))) # Adjust the divisor based on sensitivity
 
         draw_voice_box(height)
 
