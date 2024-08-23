@@ -1,6 +1,6 @@
 # KITT's Voice Box
 
-![KITT](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWFuYXlzbG56ZTg2eWE5amtoYTIwaGRpd3EzNmlqY2dhNTc5OGwzbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UBC5vcRBpPIYM/giphy.webp)
+![KITT](./images/kitt.gif)
 
 Here's the calculations used to simulate KITT's voice box:
 

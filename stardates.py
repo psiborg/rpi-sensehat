@@ -15,6 +15,8 @@ import sys
 import time
 from datetime import datetime
 from sense_hat import SenseHat
+from effects.warp import WarpEffect
+from utils.color_names import HTML_COLORS
 
 sense = SenseHat()
 
@@ -42,74 +44,7 @@ def calculate_stardate(year, month, day, base_system):
     stardate = c + (1000 * (year - b)) + ((1000 / n) * (m + day - 1))
     return stardate
 
-def warp_effect1():
-    """Create a warp effect on the Sense HAT."""
-    white = (255, 255, 255)
-    black = (0, 0, 0)
-
-    for i in range(4):
-        # Simulate stars shooting by
-        sense.clear(black)
-        sense.set_pixel(3, 3, white)
-        sense.set_pixel(4, 3, white)
-        sense.set_pixel(3, 4, white)
-        sense.set_pixel(4, 4, white)
-        time.sleep(0.1)
-
-        sense.clear(black)
-        sense.set_pixel(2, 2, white)
-        sense.set_pixel(5, 2, white)
-        sense.set_pixel(2, 5, white)
-        sense.set_pixel(5, 5, white)
-        time.sleep(0.1)
-
-        sense.clear(black)
-        sense.set_pixel(1, 1, white)
-        sense.set_pixel(6, 1, white)
-        sense.set_pixel(1, 6, white)
-        sense.set_pixel(6, 6, white)
-        time.sleep(0.1)
-
-        sense.clear(black)
-        sense.set_pixel(0, 0, white)
-        sense.set_pixel(7, 0, white)
-        sense.set_pixel(0, 7, white)
-        sense.set_pixel(7, 7, white)
-        time.sleep(0.1)
-
-    sense.clear(black)
-
-def warp_effect2(duration=5):
-    """Create a warp effect with stars flying from left to right on the Sense HAT."""
-    white = (255, 255, 255)
-    black = (0, 0, 0)
-
-    start_time = time.time()
-    columns = [0] * 8  # Keep track of stars in each row
-    delay = 0.2
-
-    while time.time() - start_time < duration:
-        sense.clear(black)
-
-        # Create new stars at random positions on the left side
-        for i in range(8):
-            if random.random() < 0.5:  # 50% chance to create a star in each row
-                sense.set_pixel(0, i, white)
-                columns[i] = 0  # Start tracking the star in this row
-
-        # Move stars from left to right
-        for i in range(8):
-            if columns[i] < 7:  # Move the star only if it's still on the matrix
-                sense.set_pixel(columns[i], i, black)  # Clear the current position
-                columns[i] += 1
-                sense.set_pixel(columns[i], i, white)  # Draw the star in the new position
-
-        time.sleep(delay)
-        delay = max(0.01, delay * 0.9)  # Gradually decrease the delay to speed up
-
-    sense.clear(black)
-
-def warp_effect3(duration=5):
+def warp_effect2b(duration=5):
     """Create a warp effect with stars flying from left to right with growing tails on the Sense HAT."""
     white = (255, 255, 255)
     black = (0, 0, 0)
@@ -120,17 +55,17 @@ def warp_effect3(duration=5):
     stars = []  # List to keep track of stars and their positions
 
     while time.time() - start_time < duration:
-        sense.clear(black)
+        sense.clear()
 
         # Create new stars at random positions on the left side
-        if random.random() < 0.5:  # 50% chance to create a star in each row
+        if random.random() < 0.5: # 50% chance to create a star in each row
             row = random.randint(0, 7)
-            stars.append({'row': row, 'col': 0, 'tail': 1})  # Start with tail length of 1
+            stars.append({'row': row, 'col': 0, 'tail': 1}) # Start with tail length of 1
 
         # Move stars and update their tails
         new_stars = []
         for star in stars:
-            if star['col'] < 7:  # Move the star only if it's still on the matrix
+            if star['col'] < 7: # Move the star only if it's still on the matrix
                 # Clear the tail
                 for i in range(star['tail']):
                     if star['col'] - i >= 0:
@@ -139,7 +74,7 @@ def warp_effect3(duration=5):
                 # Move the star
                 star['col'] += 1
                 if star['tail'] < max_length:
-                    star['tail'] += 1  # Increase tail length as the star moves
+                    star['tail'] += 1 # Increase tail length as the star moves
 
                 # Draw the star and its tail
                 for i in range(star['tail']):
@@ -151,9 +86,9 @@ def warp_effect3(duration=5):
         stars = new_stars
 
         time.sleep(delay)
-        delay = max(0.01, delay * 0.9)  # Gradually decrease the delay to speed up
+        delay = max(0.01, delay * 0.9) # Gradually decrease the delay to speed up
 
-    sense.clear(black)
+    sense.clear()
 
 def display_stardate(stardate):
     """Display the stardate on the Sense HAT with a slower scroll speed."""
@@ -164,24 +99,33 @@ def main():
     if len(sys.argv) == 2:
         base_system = sys.argv[1].lower()
 
+    warp_effect = WarpEffect(sense, speed=1, colors={
+        'tl': HTML_COLORS.get('white'),
+        'tr': HTML_COLORS.get('magenta'),
+        'bl': HTML_COLORS.get('cyan'),
+        'br': HTML_COLORS.get('orange')
+    })
+
     print ("To quit, press Ctrl+C")
 
-    while True:
-        today = datetime.today()
-        year = today.year
-        month = today.month
-        day = today.day
-        stardate = calculate_stardate(year, month, day, base_system)
-        print(stardate)
-
-        warp_effect1() # Show warp effect
-        display_stardate(stardate) # Display the updated stardate
-        warp_effect3() # Show warp effect
-
-        time.sleep(5)
-
-if __name__ == "__main__":
     try:
-        main()
+        while True:
+            today = datetime.today()
+            year = today.year
+            month = today.month
+            day = today.day
+            stardate = calculate_stardate(year, month, day, base_system)
+            print(stardate)
+
+            warp_effect.fpv()
+            display_stardate(stardate) # Display the updated stardate
+            #warp_effect2b() # Show warp effect
+            warp_effect.tpv()
+
+            time.sleep(5)
+
     except KeyboardInterrupt:
         sense.clear()
+
+if __name__ == "__main__":
+    main()

@@ -1,6 +1,8 @@
 # Kitt's Voice Box (Live)
 
-Steps:
+![KITT](./images/kitt.gif)
+
+## Setup:
 
 1. Plug the USB Microphone into one of the Raspberry Pi’s USB ports.
 
