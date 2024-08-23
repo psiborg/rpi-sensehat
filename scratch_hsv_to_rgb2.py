@@ -81,5 +81,6 @@ scratch_value = 100
 rgb = scratch_hsv_to_rgb(scratch_hue, scratch_saturation, scratch_value)
 html_color_name = closest_html_color_name(rgb)
 
-print(f"RGB: {rgb}, Closest HTML Color Name: {html_color_name}")
-# Output: RGB: (255, 255, 0), Closest HTML Color Name: yellow
+print(f"HSV: (50, 100, 100)")
+print(f"RGB: {rgb}")
+print(f"Closest HTML Color Name: {html_color_name}")

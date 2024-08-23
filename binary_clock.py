@@ -52,5 +52,5 @@ try:
         display_time()
         time.sleep(1) # Update every second
 
-finally:
+except KeyboardInterrupt:
     sense.clear()

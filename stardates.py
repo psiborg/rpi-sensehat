@@ -53,7 +53,7 @@ def main():
     if len(sys.argv) == 2:
         base_system = sys.argv[1].lower()
 
-    warp_effect = WarpEffect(sense, speed=1, colors={
+    warp_effect = WarpEffects(sense, speed=1, colors={
         'tl': HTML_COLORS.get('white'),
         'tr': HTML_COLORS.get('magenta'),
         'bl': HTML_COLORS.get('cyan'),

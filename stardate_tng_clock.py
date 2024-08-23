@@ -36,7 +36,7 @@ try:
 
     while True:
         display_stardate()
-        time.sleep(60) # Update every minute
+        time.sleep(10) # Update every minute
 
 except KeyboardInterrupt:
     sense.clear()

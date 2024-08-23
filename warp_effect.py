@@ -2,7 +2,7 @@
 # ========================================================================
 # warp_effect.py
 #
-# Description: WarpEffect main program.
+# Description: Warp effect.
 #
 # Author: Jim Ing
 # Date: 2024-08-23
@@ -34,7 +34,7 @@ def main():
     }
 
     sense = SenseHat()
-    warp_effect = WarpEffect(sense, speed=args.speed, colors=colors)
+    warp_effect = WarpEffects(sense, speed=args.speed, colors=colors)
 
     print("To quit, press Ctrl+C")
 

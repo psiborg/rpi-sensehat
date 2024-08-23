@@ -39,4 +39,5 @@ def scratch_hsv_to_rgb(h, s, v):
 
 # Example: Convert Scratch HSV (50, 100, 100) to RGB
 rgb = scratch_hsv_to_rgb(50, 100, 100)
-print(rgb)  # Output: (255, 255, 0)
+print(f"HSV: (50, 100, 100)")
+print(f"RGB: {rgb}")  # Output: (0, 255, 255)
