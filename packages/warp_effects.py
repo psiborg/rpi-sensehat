@@ -1,7 +1,7 @@
 # ========================================================================
 # warp.py
 #
-# Description: WarpEffect class.
+# Description: WarpEffects class.
 #
 # Author: Jim Ing
 # Date: 2024-08-23
@@ -9,9 +9,9 @@
 
 import random
 import time
-from utils.color_names import HTML_COLORS
+from packages.color_names import HTML_COLORS
 
-class WarpEffect:
+class WarpEffects:
     def __init__(self, sense, speed=1, colors=None):
         self.sense = sense
         self.speed = speed

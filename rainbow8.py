@@ -10,9 +10,9 @@
 # ========================================================================
 
 import colorsys
+import math
 import time
 from sense_hat import SenseHat
-import math
 
 sense = SenseHat()
 sense.clear()

@@ -12,7 +12,7 @@ import random
 import time
 from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 from signal import pause
-from sprites import Sprites
+from packages.sprites import Sprites
 
 sense = SenseHat()
 sprite = Sprites()

@@ -1,7 +1,7 @@
 # ========================================================================
 # sprites.py
 #
-# Description: Sprites class.
+# Description: Sprites class of 8x8 images for the Sense HAT.
 #
 # Author: Jim Ing
 # Date: 2024-08-15

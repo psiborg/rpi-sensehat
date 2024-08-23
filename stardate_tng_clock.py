@@ -11,7 +11,7 @@
 import time
 from datetime import datetime
 from sense_hat import SenseHat
-from stardate import Stardate
+from packages.stardate import Stardate
 
 sense = SenseHat()
 

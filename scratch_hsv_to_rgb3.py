@@ -10,7 +10,7 @@
 
 import argparse
 from math import sqrt
-from utils.color_names import HTML_COLORS
+from packages.color_names import HTML_COLORS
 
 def scratch_hsv_to_rgb(h, s, v):
     h = h * 3.6

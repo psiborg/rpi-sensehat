@@ -11,8 +11,8 @@
 import time
 import argparse
 from sense_hat import SenseHat
-from effects.warp import WarpEffect
-from utils.color_names import HTML_COLORS
+from packages.warp_effects import WarpEffects
+from packages.color_names import HTML_COLORS
 
 def parse_args():
     """Parse command line arguments."""

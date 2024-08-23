@@ -16,9 +16,9 @@ sense.clear()
 
 # Define colors
 red = (255, 0, 0)
-dim_red1 = (128, 0, 0)  # Less bright red
-dim_red2 = (64, 0, 0)   # Even dimmer red
-off = (0, 0, 0)         # Turn off pixel
+dim_red1 = (128, 0, 0) # Less bright red
+dim_red2 = (64, 0, 0)  # Even dimmer red
+off = (0, 0, 0)        # Turn off pixel
 
 def kitt_scanner_with_trail():
     while True:

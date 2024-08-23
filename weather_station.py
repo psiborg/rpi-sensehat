@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
-
+# ========================================================================
+# weather_station.py
+#
+# Description: Python version of the Scratch 3 version.
+#
 # https://learn.littlebirdelectronics.com.au/raspberry-pi/raspberry-pi-weather-station-with-the-sense-hat
+#
+# Author: Jim Ing
+# Date: 2024-08-21
+# ========================================================================
 
 from sense_hat import SenseHat
 from time import sleep

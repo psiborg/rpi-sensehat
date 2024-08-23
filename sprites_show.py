@@ -11,7 +11,7 @@
 import random
 import time
 from sense_hat import SenseHat
-from sprites import Sprites
+from packages.sprites import Sprites
 
 def show_sprite(sid):
     if getattr(sprite, sid):
