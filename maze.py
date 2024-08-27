@@ -45,17 +45,18 @@ player_pos = [1, 1]  # Start position
 goal_pos = [maze_size - 2, maze_size - 2]  # Temporary goal position
 
 def generate_maze(x, y):
-    """Recursive Depth-First Search to generate a random maze."""
+    """Generate a maze using a modified DFS algorithm to create more challenging mazes."""
     directions = [(0, 2), (2, 0), (0, -2), (-2, 0)]
-    random.shuffle(directions)
+    random.shuffle(directions)  # Randomize directions
 
     for dx, dy in directions:
         nx, ny = x + dx, y + dy
 
-        if 1 <= nx < maze_size - 1 and 1 <= ny < maze_size - 1 and maze[ny][nx] == 1:
+        if 0 < nx < maze_size and 0 < ny < maze_size and maze[ny][nx] == 1:
             maze[ny][nx] = 0
-            maze[y + dy // 2][x + dx // 2] = 0
-            generate_maze(nx, ny)
+            maze[ny - dy // 2][nx - dx // 2] = 0  # Break down wall between cells
+            if random.random() > 0.3:  # Reduce backtracking to create more dead ends
+                generate_maze(nx, ny)
 
 def find_reachable_goal():
     """Find a reachable goal position by scanning from the bottom-right corner."""
