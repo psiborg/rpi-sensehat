@@ -2,14 +2,17 @@
 # ========================================================================
 # maze.py
 #
-# Description: Maze game that the player can navigate using either the
-#              mini joystick or the keyboard. The objective is to reach
-#              the green goal.
+# Description: Maze game that a player can navigate using either the
+#              mini joystick, a USB gamepad or a keyboard. The objective
+#              is to reach the green goal.
+#
+# pip3 install pygame
 #
 # Author: Jim Ing
 # Date: 2024-08-26
 # ========================================================================
 
+import pygame
 import random
 import curses
 from sense_hat import SenseHat
@@ -18,6 +21,16 @@ from threading import Thread
 
 # Initialize Sense HAT
 sense = SenseHat()
+
+# Initialize Pygame and the joystick
+pygame.init()
+pygame.joystick.init()
+
+if pygame.joystick.get_count() > 0:
+    joystick = pygame.joystick.Joystick(0)
+    joystick.init()
+else:
+    joystick = None
 
 # Maze and player configuration
 maze_size = 8  # 8x8 grid
@@ -106,11 +119,42 @@ def keyboard_movement(stdscr):
             move_player(1, 0)
         sleep(0.1)
 
+def gamepad_movement():
+    """Handle gamepad movements."""
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.JOYAXISMOTION:
+                x_axis = joystick.get_axis(0)
+                y_axis = joystick.get_axis(1)
+                if x_axis < -0.5:  # Left
+                    move_player(-1, 0)
+                elif x_axis > 0.5:  # Right
+                    move_player(1, 0)
+                if y_axis < -0.5:  # Up
+                    move_player(0, -1)
+                elif y_axis > 0.5:  # Down
+                    move_player(0, 1)
+            elif event.type == pygame.JOYBUTTONDOWN:
+                # Additional button handling can be added here
+                pass
+        sleep(0.1)
+
 def reset_game():
-    """Reset the game after winning."""
-    global player_pos, goal_pos
+    """Reset the game after winning by generating a new maze and setting a new goal."""
+    global player_pos, goal_pos, maze
+
+    # Reset the player's position
     player_pos = [1, 1]
+
+    # Generate a new random maze
+    maze = [[1 for _ in range(maze_size)] for _ in range(maze_size)]
+    maze[1][1] = 0
+    generate_maze(1, 1)
+
+    # Find a new reachable goal position
     goal_pos = find_reachable_goal()
+
+    # Clear the Sense HAT and redraw the maze
     sense.clear()
     draw_maze()
 
@@ -125,6 +169,10 @@ try:
 
     # Start joystick listener
     sense.stick.direction_any = joystick_movement
+
+    # Start gamepad listener
+    if joystick:
+        Thread(target=gamepad_movement, daemon=True).start()
 
     # Start curses-based keyboard listener
     curses.wrapper(keyboard_movement)

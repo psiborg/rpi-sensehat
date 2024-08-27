@@ -59,6 +59,28 @@ class Font:
             W, W, W, W, W, W, W, K
         ]
 
+        self.charE = [
+            K, W, W, W, W, W, W, W,
+            W, W, W, W, W, W, W, W,
+            W, W, W, K, K, K, K, K,
+            W, W, W, K, K, K, K, K,
+            W, W, W, W, W, W, K, K,
+            W, W, W, K, K, K, K, K,
+            W, W, W, W, W, W, W, W,
+            W, W, W, W, W, W, W, W
+        ]
+
+        self.charF = [
+            K, W, W, W, W, W, W, W,
+            W, W, W, W, W, W, W, W,
+            W, W, W, K, K, K, K, K,
+            W, W, W, K, K, K, K, K,
+            W, W, W, W, W, W, K, K,
+            W, W, W, K, K, K, K, K,
+            W, W, W, K, K, K, K, K,
+            W, W, W, K, K, K, K, K
+        ]
+
 '''
         self.white = [
             W, W, W, W, W, W, W, W,
