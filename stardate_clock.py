@@ -8,10 +8,8 @@
 # Date: 2024-08-16
 # ========================================================================
 
-from sense_hat import SenseHat
 from datetime import datetime
-
-sense = SenseHat()
+from config import sense
 
 def calculate_stardate():
     now = datetime.now()

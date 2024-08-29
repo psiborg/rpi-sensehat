@@ -1,5 +1,5 @@
 # ========================================================================
-# stardate.py
+# packages/stardate.py
 #
 # Description: Stardate class.
 #

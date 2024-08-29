@@ -10,9 +10,7 @@
 
 import random
 import time
-from sense_hat import SenseHat
-
-sense = SenseHat()
+from config import sense
 
 # Constants
 WIDTH, HEIGHT = 8, 8

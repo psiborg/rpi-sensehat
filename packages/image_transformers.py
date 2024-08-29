@@ -1,5 +1,5 @@
 # ========================================================================
-# image_transformers.py
+# packages/image_transformers.py
 #
 # Description: ImageTransformers classes.
 #
@@ -9,14 +9,14 @@
 
 import random
 import time
-from sense_hat import SenseHat
+from config import sense
 
 class ImageTransformer:
     def __init__(self, image, speed=None, direction=None, steps=None, timing=None, debug=False):
         if len(image) != 64:
             raise ValueError("Image must be a list of 64 tuples representing an 8x8 matrix.")
 
-        self.sense = SenseHat()
+        self.sense = sense
         self.image = image
         self.speed = speed if speed is not None else random.uniform(0.025, 0.75)
         self.direction = direction

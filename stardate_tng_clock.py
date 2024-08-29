@@ -10,10 +10,8 @@
 
 import time
 from datetime import datetime
-from sense_hat import SenseHat
+from config import sense
 from packages.stardate import Stardate
-
-sense = SenseHat()
 
 stardate = Stardate()
 

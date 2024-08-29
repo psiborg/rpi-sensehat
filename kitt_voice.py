@@ -8,11 +8,9 @@
 # Date: 2024-08-15
 # ========================================================================
 
-from sense_hat import SenseHat
-from time import sleep
 import random
-
-sense = SenseHat()
+from time import sleep
+from config import sense
 
 # Define colors with varying brightness
 red_high = [255, 0, 0]

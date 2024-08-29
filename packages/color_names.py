@@ -1,5 +1,5 @@
 # ========================================================================
-# color_names.py
+# packages/color_names.py
 #
 # Description: List of 140 HTML color names (defined by the CSS Color
 #              Module Level 4 specification) with their RGB values.

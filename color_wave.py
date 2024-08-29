@@ -9,10 +9,8 @@
 # Date: 2024-08-18
 # ========================================================================
 
-from sense_hat import SenseHat
 import time
-
-sense = SenseHat()
+from config import sense
 
 # Define the gradient colors (RGB tuples)
 colors = [

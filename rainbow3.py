@@ -11,9 +11,8 @@
 import colorsys
 import random
 import time
-from sense_hat import SenseHat
+from config import sense
 
-sense = SenseHat()
 sense.clear()
 
 # Create a list of all positions

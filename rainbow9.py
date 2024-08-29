@@ -11,9 +11,8 @@
 
 import colorsys
 import time
-from sense_hat import SenseHat
+from config import sense
 
-sense = SenseHat()
 sense.clear()
 
 # Define the spiral order for an 8x8 matrix

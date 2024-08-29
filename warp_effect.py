@@ -10,7 +10,7 @@
 
 import time
 import argparse
-from sense_hat import SenseHat
+from config import sense
 from packages.warp_effects import WarpEffects
 from packages.color_names import HTML_COLORS
 
@@ -33,7 +33,6 @@ def main():
         'br': HTML_COLORS.get(args.colors[3], (255, 255, 0)) # Default to yellow
     }
 
-    sense = SenseHat()
     warp_effect = WarpEffects(sense, speed=args.speed, colors=colors)
 
     print("To quit, press Ctrl+C")

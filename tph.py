@@ -9,10 +9,8 @@
 # Date: 2024-08-18
 # ========================================================================
 
-from sense_hat import SenseHat
 import time
-
-sense = SenseHat()
+from config import sense
 
 # Function to map sensor value to a color gradient
 def get_color(value, min_val, max_val, color_range):

@@ -10,10 +10,9 @@
 # Date: 2024-08-21
 # ========================================================================
 
-from sense_hat import SenseHat
 from time import sleep
+from config import sense
 
-sense = SenseHat()
 sense.clear()
 
 R = [229, 0, 0]     # red

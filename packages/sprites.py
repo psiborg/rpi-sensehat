@@ -1,5 +1,5 @@
 # ========================================================================
-# sprites.py
+# packages/sprites.py
 #
 # Description: Sprites class of 8x8 images for the Sense HAT.
 #

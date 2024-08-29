@@ -10,7 +10,7 @@
 
 import random
 import time
-from sense_hat import SenseHat
+from config import sense
 from packages.sprites import Sprites
 
 def show_sprite(sid):
@@ -82,11 +82,6 @@ def show_all():
 # ------------------------------------------------------------------------
 # Main
 # ------------------------------------------------------------------------
-
-sense = SenseHat()
-#sense.low_light = True
-#sense.set_rotation(180)
-#sense.clear()
 
 sprite = Sprites()
 

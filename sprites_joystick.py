@@ -10,11 +10,14 @@
 
 import random
 import time
-from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 from signal import pause
-from packages.sprites import Sprites
 
+from sense_hat import SenseHat, ACTION_RELEASED
 sense = SenseHat()
+sense.rotation = 180
+sense.low_light = True
+
+from packages.sprites import Sprites
 sprite = Sprites()
 
 # Track current group and image indices
@@ -67,12 +70,42 @@ def pushed_right(event):
         current_image_index = (current_image_index + 1) % len(groups[current_group_index])
         show_sprite()
 
-# Bind joystick directions to functions
-sense.stick.direction_up = pushed_up
-sense.stick.direction_down = pushed_down
-sense.stick.direction_left = pushed_left
-sense.stick.direction_right = pushed_right
-#sense.stick.direction_any = show_sprite
+# Rotation mapping based on rotation degrees
+ROTATION_MAP = {
+    0: {
+        'up': pushed_up,
+        'down': pushed_down,
+        'left': pushed_left,
+        'right': pushed_right
+    },
+    90: {
+        'up': pushed_right,
+        'down': pushed_left,
+        'left': pushed_up,
+        'right': pushed_down
+    },
+    180: {
+        'up': pushed_down,
+        'down': pushed_up,
+        'left': pushed_right,
+        'right': pushed_left
+    },
+    270: {
+        'up': pushed_left,
+        'down': pushed_right,
+        'left': pushed_down,
+        'right': pushed_up
+    }
+}
+
+# Apply the appropriate mappings based on current rotation
+rotation_mapping = ROTATION_MAP[sense.rotation]
+
+# Bind joystick directions to functions based on rotation
+sense.stick.direction_up = rotation_mapping['up']
+sense.stick.direction_down = rotation_mapping['down']
+sense.stick.direction_left = rotation_mapping['left']
+sense.stick.direction_right = rotation_mapping['right']
 
 # Clear the screen when the middle button is pressed
 sense.stick.direction_middle = sense.clear

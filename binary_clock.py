@@ -8,11 +8,9 @@
 # Date: 2024-08-15
 # ========================================================================
 
-from sense_hat import SenseHat
-from datetime import datetime
 import time
-
-sense = SenseHat()
+from datetime import datetime
+from config import sense
 
 # Define colors
 red = (255, 0, 0)    # Red for hours

@@ -13,3 +13,19 @@ Raspberry Pi Sense HAT
 - accurate temperature measurement range = 0 to 65°C using get_temperature_from_pressure()
 - accurate temperature measurement range = 15 to 40°C using get_temperature_from_humidity()
 - relative humidity range = 0 to 100% using get_humidity()
+
+## Setup
+
+```sh
+sudo apt install sense-hat
+
+sudo apt install thonny
+
+# for maze.py
+pip3 install pygame
+
+cd ~/Projects
+git clone https://github.com/psiborg/rpi-sensehat.git
+cd rpi-sensehat
+chmod 755 *.py
+```

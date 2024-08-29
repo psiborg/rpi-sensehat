@@ -8,12 +8,9 @@
 # Date: 2024-08-15
 # ========================================================================
 
-from sense_hat import SenseHat
-from time import sleep
 import sys
-
-sh = SenseHat()
-sh.set_rotation(180)
+from time import sleep
+from config import sense
 
 r = (255, 0, 0)     # red
 o = (255, 128, 0)   # orange
@@ -32,17 +29,17 @@ try:
     print ("To quit, press Ctrl+C")
 
     while True:
-        sh.clear()
+        sense.clear()
 
         for y in range(8):
             colour = rainbow[y]
             for x in range(8):
-                sh.set_pixel(x, y, colour)
+                sense.set_pixel(x, y, colour)
 
             sleep(1)
         sleep(3)
 
-        sh.show_message("Hello!", text_colour = w, back_colour = b)
+        sense.show_message("Hello!", text_colour = w, back_colour = b)
         sleep(3)
 
 # Exit cleanly
@@ -50,5 +47,5 @@ except KeyboardInterrupt:
     print("\n" + "Stopped")
 
 finally:
-    sh.clear()
+    sense.clear()
     sys.exit(0)

@@ -1,5 +1,5 @@
 # ========================================================================
-# morse.py
+# packages/morse.py
 #
 # Description: Morse Code class for the Sense HAT.
 #
@@ -7,7 +7,7 @@
 # Date: 2024-08-26
 # ========================================================================
 
-from sense_hat import SenseHat
+from config import sense
 import time
 
 class Morse:
@@ -27,7 +27,7 @@ class Morse:
     bg_color = [0, 0, 0]  # Background color (black)
 
     def __init__(self):
-        self.sense = SenseHat()
+        self.sense = sense
 
     def text_to_morse(self, message):
         morse_code = ""

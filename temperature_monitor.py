@@ -8,11 +8,8 @@
 # Date: 2024-08-15
 # ========================================================================
 
-from sense_hat import SenseHat
 import time
-
-sense = SenseHat()
-sense.low_light = True
+from config import sense
 
 # Define the color ranges with hex codes and names
 colors = [

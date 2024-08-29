@@ -8,11 +8,10 @@
 # Date: 2024-08-17
 # ========================================================================
 
-import time
 import random
-from sense_hat import SenseHat
+import time
+from config import sense
 
-sense = SenseHat()
 sense.clear()
 
 # Set parameters for the ball animation

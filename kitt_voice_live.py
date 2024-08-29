@@ -10,10 +10,8 @@
 
 import numpy as np
 import pyaudio
-from sense_hat import SenseHat
 from time import sleep
-
-sense = SenseHat()
+from config import sense
 
 # Define colors with varying brightness
 red_high = [255, 0, 0]

@@ -8,8 +8,8 @@
 # Date: 2024-08-25
 # ========================================================================
 
-from sense_hat import SenseHat
 from time import sleep
+from config import sense
 
 # Define the colors
 Y = (255, 255, 0)   # Yellow
@@ -66,9 +66,6 @@ def animate_pacman():
             sense.set_pixels(frame)
             sleep(0.2)
             frame = shift_left(frame)
-
-# Initialize Sense HAT
-sense = SenseHat()
 
 # Run the animation
 try:

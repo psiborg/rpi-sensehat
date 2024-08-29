@@ -12,15 +12,40 @@
 # Date: 2024-08-26
 # ========================================================================
 
+import curses
 import pygame
 import random
-import curses
-from sense_hat import SenseHat
-from time import sleep
 from threading import Thread
+from time import sleep
+from config import sense
 
-# Initialize Sense HAT
-sense = SenseHat()
+# Rotation mapping for WASD keys based on rotation degrees
+KEYBOARD_ROTATION_MAP = {
+    0: {
+        ord('w'): (0, -1),  # Move up
+        ord('s'): (0, 1),   # Move down
+        ord('a'): (-1, 0),  # Move left
+        ord('d'): (1, 0)    # Move right
+    },
+    90: {
+        ord('w'): (1, 0),   # Move right
+        ord('s'): (-1, 0),  # Move left
+        ord('a'): (0, -1),  # Move up
+        ord('d'): (0, 1)    # Move down
+    },
+    180: {
+        ord('w'): (0, 1),   # Move down
+        ord('s'): (0, -1),  # Move up
+        ord('a'): (1, 0),   # Move right
+        ord('d'): (-1, 0)   # Move left
+    },
+    270: {
+        ord('w'): (-1, 0),  # Move left
+        ord('s'): (1, 0),   # Move right
+        ord('a'): (0, 1),   # Move down
+        ord('d'): (0, -1)   # Move up
+    }
+}
 
 # Initialize Pygame and the joystick
 pygame.init()
@@ -76,8 +101,18 @@ def draw_maze():
     sense.set_pixel(player_pos[0], player_pos[1], player_color)
 
 def move_player(dx, dy):
-    """Move the player if the move is valid."""
+    """Move the player if the move is valid, adjusted for rotation."""
     global player_pos
+    rotation = sense.rotation
+
+    # Adjust movement based on the current rotation
+    if rotation == 90:
+        dx, dy = dy, -dx
+    elif rotation == 180:
+        dx, dy = -dx, -dy
+    elif rotation == 270:
+        dx, dy = -dy, dx
+
     nx, ny = player_pos[0] + dx, player_pos[1] + dy
 
     if 0 <= nx < maze_size and 0 <= ny < maze_size and maze[ny][nx] == 0:
@@ -94,6 +129,7 @@ def check_goal():
 
 def joystick_movement(event):
     """Handle joystick movements."""
+    #print(f"direction = {event.direction}")
     if event.action != 'pressed':
         return
     if event.direction == 'up':
@@ -106,18 +142,20 @@ def joystick_movement(event):
         move_player(1, 0)
 
 def keyboard_movement(stdscr):
-    """Handle keyboard movements using curses."""
+    """Handle keyboard movements using curses with rotation mapping."""
     stdscr.nodelay(True)  # Make getch non-blocking
+
+    # Get the current rotation of the Sense HAT
+    rotation = sense.rotation
+
+    # Apply the appropriate keyboard mapping based on current rotation
+    key_mapping = KEYBOARD_ROTATION_MAP[rotation]
+
     while True:
         key = stdscr.getch()
-        if key == ord('w'):
-            move_player(0, -1)
-        elif key == ord('s'):
-            move_player(0, 1)
-        elif key == ord('a'):
-            move_player(-1, 0)
-        elif key == ord('d'):
-            move_player(1, 0)
+        if key in key_mapping:
+            dx, dy = key_mapping[key]
+            move_player(dx, dy)
         sleep(0.1)
 
 def gamepad_movement():
@@ -160,7 +198,7 @@ def reset_game():
     draw_maze()
 
 try:
-    print ("To quit, press Ctrl+C")
+    print("To quit, press Ctrl+C")
 
     # Generate and draw the maze
     maze[1][1] = 0

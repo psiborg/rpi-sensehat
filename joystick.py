@@ -10,43 +10,52 @@
 # Date: 2024-08-15
 # ========================================================================
 
-from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 from signal import pause
+from config import sense
 
 x = 3
 y = 3
-sense = SenseHat()
 
 def clamp(value, min_value=0, max_value=7):
     return min(max_value, max(min_value, value))
 
-def pushed_up(event):
-    global y
-    if event.action != ACTION_RELEASED:
-        y = clamp(y - 1)
+def move_pixel(dx, dy):
+    """Move the pixel if the move is valid, adjusted for rotation."""
+    global x, y
+    rotation = sense.rotation
 
-def pushed_down(event):
-    global y
-    if event.action != ACTION_RELEASED:
-        y = clamp(y + 1)
+    # Adjust movement based on the current rotation
+    if rotation == 90:
+        dx, dy = dy, -dx
+    elif rotation == 180:
+        dx, dy = -dx, -dy
+    elif rotation == 270:
+        dx, dy = -dy, dx
 
-def pushed_left(event):
-    global x
-    if event.action != ACTION_RELEASED:
-        x = clamp(x - 1)
+    new_x, new_y = clamp(x + dx), clamp(y + dy)
 
-def pushed_right(event):
-    global x
-    if event.action != ACTION_RELEASED:
-        x = clamp(x + 1)
+    # Update the position
+    x, y = new_x, new_y
 
-def refresh():
-    sense.clear() # comment out this line to leave a trail
+def pushed_up(event=None):
+    move_pixel(0, -1)
+
+def pushed_down(event=None):
+    move_pixel(0, 1)
+
+def pushed_left(event=None):
+    move_pixel(-1, 0)
+
+def pushed_right(event=None):
+    move_pixel(1, 0)
+
+def refresh(event=None):
+    #sense.clear()  # comment out this line to leave a trail
     sense.set_pixel(x, y, 255, 255, 255)
 
-print ("Instructions:")
-print ("  - Use the mini joystick to move the white dot on the LED screen.")
-print ("  - To quit, press Ctrl+C")
+print("Instructions:")
+print("  - Use the mini joystick to move the white dot on the LED screen.")
+print("  - To quit, press Ctrl+C")
 
 sense.stick.direction_up = pushed_up
 sense.stick.direction_down = pushed_down

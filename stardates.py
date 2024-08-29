@@ -14,11 +14,9 @@ import random
 import sys
 import time
 from datetime import datetime
-from sense_hat import SenseHat
+from config import sense
 from packages.warp_effects import WarpEffects
 from packages.color_names import HTML_COLORS
-
-sense = SenseHat()
 
 def is_leap_year(year):
     """Check if a given year is a leap year."""

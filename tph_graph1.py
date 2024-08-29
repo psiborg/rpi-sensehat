@@ -9,10 +9,8 @@
 # Date: 2024-08-20
 # ========================================================================
 
-from sense_hat import SenseHat
 import time
-
-sense = SenseHat()
+from config import sense
 
 # Temperature adjustment factor
 temp_adjustment = 13

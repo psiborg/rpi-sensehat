@@ -1,5 +1,5 @@
 # ========================================================================
-# warp.py
+# packages/warp.py
 #
 # Description: WarpEffects class.
 #

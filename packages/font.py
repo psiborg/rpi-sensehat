@@ -1,5 +1,5 @@
 # ========================================================================
-# font.py
+# packages/font.py
 #
 # Description: Custom font class for the Sense HAT.
 #

@@ -12,9 +12,8 @@
 import colorsys
 import math
 import time
-from sense_hat import SenseHat
+from config import sense
 
-sense = SenseHat()
 sense.clear()
 
 def rotate_around_center(x, y, angle):

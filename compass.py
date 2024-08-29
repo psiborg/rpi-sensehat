@@ -8,10 +8,8 @@
 # Date: 2024-08-17
 # ========================================================================
 
-from sense_hat import SenseHat
 import time
-
-sense = SenseHat()
+from config import sense
 
 # Define colors
 W = (255, 255, 255) # White

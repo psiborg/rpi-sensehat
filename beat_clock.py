@@ -10,10 +10,9 @@
 # Date: 2024-08-16
 # ========================================================================
 
-from sense_hat import SenseHat
 from datetime import datetime, timezone, timedelta
+from config import sense
 
-sense = SenseHat()
 sense.low_light = True
 
 def calculate_beat_time():

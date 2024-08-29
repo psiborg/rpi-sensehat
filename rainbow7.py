@@ -10,9 +10,8 @@
 
 import colorsys
 import time
-from sense_hat import SenseHat
+from config import sense
 
-sense = SenseHat()
 sense.clear()
 
 for x in range(8):
