@@ -19,3 +19,6 @@ git fetch origin
 
 # Reset your branch to the latest commit on the remote
 git reset --hard origin/main
+
+# Set executable permissions for all .py and .sh files
+chmod 755 *.py *.sh
