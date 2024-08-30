@@ -81,7 +81,7 @@ class Font:
             W, W, W, K, K, K, K, K
         ]
 
-'''
+        '''
         self.white = [
             W, W, W, W, W, W, W, W,
             W, W, W, W, W, W, W, W,
@@ -92,4 +92,14 @@ class Font:
             W, W, W, W, W, W, W, W,
             W, W, W, W, W, W, W, W
         ]
-'''
+        '''
+
+        # Character mapping
+        self.char_map = {
+            'A': self.charA,
+            'B': self.charB,
+            'C': self.charC,
+            'D': self.charD,
+            'E': self.charE,
+            'F': self.charF
+        }
