@@ -69,6 +69,9 @@ class ImageRotator(ImageTransformer):
 
         return sum(self.matrix, [])
 
+    def clear(self):
+        sense.clear()
+
 class ImageSlider(ImageTransformer):
     def __init__(self, image, speed=None, direction=None, steps=None, timing=None, debug=False):
         super().__init__(image, speed, direction, steps, timing, debug)
@@ -96,3 +99,6 @@ class ImageSlider(ImageTransformer):
             time.sleep(delays[i])
 
         return sum(self.matrix, [])
+
+    def clear(self):
+        sense.clear()

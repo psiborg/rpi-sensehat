@@ -12,8 +12,12 @@ from packages.image_transformers import ImageRotator
 from packages.sprites import Sprites
 
 if __name__ == "__main__":
-    sprite = Sprites()
+    try:
+        sprite = Sprites()
 
-    # Rotating an image
-    rotator = ImageRotator(sprite.arrowUp, debug=True)
-    rotator.rotate()
+        # Rotating an image
+        rotator = ImageRotator(sprite.arrowUp, debug=True)
+        rotator.rotate()
+
+    except KeyboardInterrupt:
+        rotator.clear()

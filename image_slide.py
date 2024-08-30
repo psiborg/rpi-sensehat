@@ -12,8 +12,12 @@ from packages.image_transformers import ImageSlider
 from packages.sprites import Sprites
 
 if __name__ == "__main__":
-    sprite = Sprites()
+    try:
+        sprite = Sprites()
 
-    # Sliding an image
-    slider = ImageSlider(sprite.arrowUp, steps=8, debug=True)
-    slider.slide()
+        # Sliding an image
+        slider = ImageSlider(sprite.arrowUp, steps=8, debug=True)
+        slider.slide()
+
+    except KeyboardInterrupt:
+        slider.clear()
