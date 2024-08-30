@@ -54,6 +54,23 @@ def closest_html_color_name(rgb):
 
     return closest_color
 
+def closest_html_color_names(rgb):
+    r, g, b = rgb
+    min_distance = float('inf')
+    closest_colors = []
+
+    for color_name, color_rgb in HTML_COLORS.items():
+        cr, cg, cb = color_rgb
+        distance = sqrt((r - cr)**2 + (g - cg)**2 + (b - cb)**2)
+
+        if distance < min_distance:
+            min_distance = distance
+            closest_colors = [color_name]  # Start a new list with the closest color
+        elif distance == min_distance:
+            closest_colors.append(color_name)  # Add to the list if the distance is the same
+
+    return closest_colors
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert Scratch HSV to RGB and find the closest HTML color name.")
     parser.add_argument("hue", type=float, help="Hue value (0-100 in Scratch)")
@@ -67,8 +84,9 @@ if __name__ == "__main__":
     scratch_value = args.value
 
     rgb = scratch_hsv_to_rgb(scratch_hue, scratch_saturation, scratch_value)
-    html_color_name = closest_html_color_name(rgb)
+    #html_color_name = closest_html_color_name(rgb)
+    html_color_name = closest_html_color_names(rgb)
 
     print(f"Scratch HSV: ({scratch_hue}, {scratch_saturation}, {scratch_value})")
     print(f"RGB: {rgb}")
-    print(f"Closest HTML Color Name: {html_color_name}")
+    print(f"Closest HTML Color Name(s): {html_color_name}")
