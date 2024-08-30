@@ -388,3 +388,13 @@ class Sprites:
             self.raspberry,
             self.smiley
         ]
+
+        self.groups = {
+            0: self.animals,
+            1: self.arrows,
+            2: self.dices,
+            3: self.ghosts,
+            4: self.misc
+        }
+
+        self.group_names = ["Animals", "Arrows", "Dice", "Ghosts", "Misc"]

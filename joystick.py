@@ -20,7 +20,7 @@ def clamp(value, min_value=0, max_value=7):
     return min(max_value, max(min_value, value))
 
 def move_pixel(dx, dy):
-    """Move the pixel if the move is valid, adjusted for rotation."""
+    """Move the pixel, adjusted for rotation."""
     global x, y
     rotation = sense.rotation
 
