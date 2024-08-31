@@ -10,12 +10,12 @@
 # Date: 2024-08-30
 # ========================================================================
 
-#from config import sense
-import yfinance as yf
-import time
 import argparse
+import json
+import time
+import yfinance as yf
 
-# Set up the Sense HAT
+#from config import sense
 #sense.clear()
 
 # Define stock symbols
@@ -33,7 +33,9 @@ def fetch_stock_data(symbols, debug=False):
         info = stock.info
 
         if debug:
-            print(f"Fetching data for {symbol}")
+            #print(f"Fetching data for {symbol}")
+            # Print all the information available
+            print(json.dumps(info, indent=4))
 
         price = info.get("regularMarketPrice") or info.get("currentPrice")
         prev_close = info.get("regularMarketPreviousClose") or info.get("previousClose")
@@ -53,8 +55,8 @@ def fetch_stock_data(symbols, debug=False):
             'volume': volume
         }
 
-        if debug:
-            print(f"{symbol}: Price: {price}, Change: {change}, Percent Change: {percent_change:.2f}%, Volume: {volume}")
+        #if debug:
+            #print(f"{symbol}: Price: {price}, Change: {change}, Percent Change: {percent_change:.2f}%, Volume: {volume}")
 
     return stock_data
 
