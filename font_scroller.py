@@ -20,7 +20,7 @@ font = Font()
 
 # Function to parse command line arguments
 def parse_args():
-    text = "ABCDEF"
+    text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!?.:"
     bg_color = (0, 0, 0)  # Black
     text_color = (255, 255, 255)  # White
     scroll_speed = 0.1

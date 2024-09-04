@@ -5,22 +5,30 @@
 # Description: A basic implementation of a Galaga-type game on the
 #              Sense HAT.
 #
-# pip3 install evdev
-#
-# ls -l /dev/input/by-id
-#
-#   Example:
-#   usb-Controller_Controller_Controller-event-joystick -> ../event6
+# pip3 install pygame
 #
 # Author: Jim Ing
-# Date: 2024-08-31
+# Date: 2024-09-04
 # ========================================================================
 
-from evdev import InputDevice, categorize, ecodes
+import pygame
 from time import sleep, time
+import os
 import random
 import threading
 from config import sense
+
+# Initialize Pygame
+pygame.init()
+pygame.joystick.init()
+
+# Check if a joystick is connected
+if pygame.joystick.get_count() < 1:
+    raise RuntimeError("No joystick connected")
+
+# Get the first connected joystick
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
 
 # Get the current rotation of the Sense HAT
 rotation = sense.rotation
@@ -39,30 +47,47 @@ alien_color = (255, 0, 0)
 bullet_color = (255, 255, 255)
 bg_color = (0, 0, 0)
 
-# Initialize Gamepad
-gamepad = InputDevice('/dev/input/event6')  # Replace 'eventX' with the correct device file for your gamepad
-
-# Button and D-Pad codes (these might vary depending on your gamepad model)
-BTN_A = 304
-BTN_B = 305
-BTN_X = 307
-BTN_Y = 308
-DPAD_LEFT = 17  # Left/Right axis
-DPAD_RIGHT = 16  # Up/Down axis
+# Button indices for the joystick
+BTN_A = 1 # for secondary actions, like confirming choices in menus, jumping, or performing special actions
+BTN_B = 2 # for primary actions, such as running, attacking, or canceling options in menus
+BTN_X = 0 # for alternative actions or context-sensitive functions, such as changing weapons or using items
+BTN_Y = 3 # for primary attacks or secondary movement, like running or dashing
+DPAD_HORIZONTAL = 0
+DPAD_VERTICAL = 1
 
 # Alien movement variables
-alien_move_interval = 0.5  # Time in seconds between alien movements
+alien_move_interval = 0.75  # Time in seconds between alien movements
 last_alien_move_time = time()  # Initialize the timer with the current time
+
+def print_at(x, y, text):
+    # Move the cursor to the specified position, clear the line, and print the text
+    print(f"\033[{y};{x}H\033[2K{text}")
 
 def draw_fighter():
     sense.set_pixel(fighter_pos, 7, fighter_color)
 
 def move_fighter(direction):
     global fighter_pos
-    if direction == 'left' and fighter_pos > 0:
-        fighter_pos -= 1
-    elif direction == 'right' and fighter_pos < 7:
-        fighter_pos += 1
+    if rotation == 0:
+        if direction == 'left' and fighter_pos > 0:
+            fighter_pos -= 1
+        elif direction == 'right' and fighter_pos < 7:
+            fighter_pos += 1
+    elif rotation == 90:
+        if direction == 'left' and fighter_pos < 7:
+            fighter_pos += 1
+        elif direction == 'right' and fighter_pos > 0:
+            fighter_pos -= 1
+    elif rotation == 180:
+        if direction == 'left' and fighter_pos < 7:
+            fighter_pos += 1
+        elif direction == 'right' and fighter_pos > 0:
+            fighter_pos -= 1
+    elif rotation == 270:
+        if direction == 'left' and fighter_pos > 0:
+            fighter_pos -= 1
+        elif direction == 'right' and fighter_pos < 7:
+            fighter_pos += 1
 
 def fire_bullet():
     bullets.append([fighter_pos, 6])  # Fire bullet from just above the fighter
@@ -110,25 +135,24 @@ def draw_screen():
         sense.set_pixel(alien[0], alien[1], alien_color)
 
 def handle_gamepad_events():
-    for event in gamepad.read_loop():
-        if event.type == ecodes.EV_KEY:
-            if event.value == 1:  # Button press
-                if event.code == DPAD_LEFT:
-                    move_fighter('left')
-                elif event.code == DPAD_RIGHT:
-                    move_fighter('right')
-                elif event.code == BTN_A:  # A button for firing
+    while not game_over:
+        for event in pygame.event.get():
+            if event.type == pygame.JOYBUTTONDOWN:
+                if event.button == BTN_B:
                     fire_bullet()
-        elif event.type == ecodes.EV_ABS:  # Handle D-Pad axis
-            if event.code == DPAD_LEFT and event.value == -1:
-                move_fighter('left')
-            elif event.code == DPAD_RIGHT and event.value == 1:
-                move_fighter('right')
+            elif event.type == pygame.JOYAXISMOTION:
+                if event.axis == DPAD_HORIZONTAL:
+                    if event.value < -0.5:
+                        move_fighter('left')
+                    elif event.value > 0.5:
+                        move_fighter('right')
 
 # Start Gamepad event handling in a separate thread
 gamepad_thread = threading.Thread(target=handle_gamepad_events)
 gamepad_thread.daemon = True
 gamepad_thread.start()
+
+os.system('clear')  # Clear the screen
 
 # Main Game Loop
 while not game_over:
@@ -138,7 +162,7 @@ while not game_over:
     draw_screen()
 
     # Print score and lives to the console
-    print(f"Score: {score}  Lives: {lives}")
+    print_at(1, 1, f"Score: {score}  Lives: {lives}")
 
     sleep(0.1)  # Game speed
 
@@ -146,3 +170,6 @@ while not game_over:
 print(f"Game Over! Final Score: {score}")
 sense.show_message(f"Score: {score}", text_colour=[255, 0, 0])
 sense.clear()
+
+# Quit Pygame
+pygame.quit()

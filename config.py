@@ -13,5 +13,5 @@ from sense_hat import SenseHat
 
 sense = SenseHat()
 
-sense.rotation = 180
+sense.rotation = 0
 sense.low_light = True
