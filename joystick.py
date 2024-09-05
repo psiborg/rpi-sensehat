@@ -16,6 +16,10 @@ from config import sense
 x = 3
 y = 3
 
+# Define color list (red, green, blue)
+colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
+color_index = 0
+
 def clamp(value, min_value=0, max_value=7):
     return min(max_value, max(min_value, value))
 
@@ -63,10 +67,20 @@ def pushed_right(event):
         move_pixel(1, 0)
         refresh()
 
+def toggle_color(event):
+    """Toggle between red, green, and blue when joystick is pressed in the middle."""
+    global color_index
+    if event.action == "pressed":
+        # Cycle through colors
+        color_index = (color_index + 1) % len(colors)
+        refresh()
+
 def refresh(event=None):
     print(f"refresh: {x}, {y}")
     sense.clear()  # comment out this line to leave a trail
-    sense.set_pixel(x, y, 255, 255, 255)
+    # Set pixel with the current color
+    sense.set_pixel(x, y, *colors[color_index])
+    #sense.set_pixel(x, y, 255, 255, 255)
 
 print("Instructions:")
 print("  - Use the mini joystick to move the white dot on the LED screen.")
@@ -76,6 +90,7 @@ sense.stick.direction_up = pushed_up
 sense.stick.direction_down = pushed_down
 sense.stick.direction_left = pushed_left
 sense.stick.direction_right = pushed_right
+sense.stick.direction_middle = toggle_color
 #sense.stick.direction_any = refresh
 
 try:
