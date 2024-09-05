@@ -30,9 +30,6 @@ if pygame.joystick.get_count() < 1:
 joystick = pygame.joystick.Joystick(0)
 joystick.init()
 
-# Get the current rotation of the Sense HAT
-rotation = sense.rotation
-
 # Game Variables
 score = 0
 lives = 10
@@ -68,26 +65,10 @@ def draw_fighter():
 
 def move_fighter(direction):
     global fighter_pos
-    if rotation == 0:
-        if direction == 'left' and fighter_pos > 0:
-            fighter_pos -= 1
-        elif direction == 'right' and fighter_pos < 7:
-            fighter_pos += 1
-    elif rotation == 90:
-        if direction == 'left' and fighter_pos < 7:
-            fighter_pos += 1
-        elif direction == 'right' and fighter_pos > 0:
-            fighter_pos -= 1
-    elif rotation == 180:
-        if direction == 'left' and fighter_pos < 7:
-            fighter_pos += 1
-        elif direction == 'right' and fighter_pos > 0:
-            fighter_pos -= 1
-    elif rotation == 270:
-        if direction == 'left' and fighter_pos > 0:
-            fighter_pos -= 1
-        elif direction == 'right' and fighter_pos < 7:
-            fighter_pos += 1
+    if direction == 'left' and fighter_pos > 0:
+        fighter_pos -= 1
+    elif direction == 'right' and fighter_pos < 7:
+        fighter_pos += 1
 
 def fire_bullet():
     bullets.append([fighter_pos, 6])  # Fire bullet from just above the fighter
@@ -147,29 +128,34 @@ def handle_gamepad_events():
                     elif event.value > 0.5:
                         move_fighter('right')
 
-# Start Gamepad event handling in a separate thread
-gamepad_thread = threading.Thread(target=handle_gamepad_events)
-gamepad_thread.daemon = True
-gamepad_thread.start()
+try:
+    # Start Gamepad event handling in a separate thread
+    gamepad_thread = threading.Thread(target=handle_gamepad_events)
+    gamepad_thread.daemon = True
+    gamepad_thread.start()
 
-os.system('clear')  # Clear the screen
+    os.system('clear')  # Clear the screen
 
-# Main Game Loop
-while not game_over:
-    spawn_alien()
-    move_bullets()
-    move_aliens()
-    draw_screen()
+    # Main Game Loop
+    while not game_over:
+        spawn_alien()
+        move_bullets()
+        move_aliens()
+        draw_screen()
 
-    # Print score and lives to the console
-    print_at(1, 1, f"Score: {score}  Lives: {lives}")
+        # Print score and lives to the console
+        print_at(1, 1, f"Score: {score}  Lives: {lives}")
 
-    sleep(0.1)  # Game speed
+        sleep(0.1)  # Game speed
 
-# Game Over
-print(f"Game Over! Final Score: {score}")
-sense.show_message(f"Score: {score}", text_colour=[255, 0, 0])
-sense.clear()
+    # Game Over
+    print(f"Game Over! Final Score: {score}")
+    sense.show_message(f"Score: {score}", text_colour=[255, 0, 0])
+    sense.clear()
 
-# Quit Pygame
-pygame.quit()
+    # Quit Pygame
+    pygame.quit()
+
+except KeyboardInterrupt:
+    pygame.quit()
+    sense.clear()
