@@ -115,28 +115,3 @@ if __name__ == "__main__":
         # If you forget this line, the program will 'hang'
         # on exit if running from IDLE.
         pygame.quit()
-
-'''
-Joystick button: pressed/released
-
-Number of joysticks: 1
-  Joystick 0
-    Joystick name: USB Gamepad
-    GUID: 030...
-    Joystick's power level: unknown
-    Number of axes: 2
-      Axis 0 value: 0.000
-      Axis 1 value: 0.000
-    Number of buttons: 10
-      Button 0 value: 0
-      Button 1 value: 0
-      Button 2 value: 0
-      Button 3 value: 0
-      Button 4 value: 0
-      Button 5 value: 0
-      Button 6 value: 0
-      Button 7 value: 0
-      Button 8 value: 0
-      Button 9 value: 0
-    Number of hats: 0
-'''
