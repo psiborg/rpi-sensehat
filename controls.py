@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # ========================================================================
-# controls2.py
+# controls.py
 #
 # Description:
 #
@@ -57,8 +57,10 @@ def move_pixel(joystick, pos, rotation):
 # Starting position of the pixel
 pos = [4, 4]
 
-# Initial color of the pixel
-color = [255, 0, 0]
+# Initial color of the pixel (red)
+colors = [[255, 0, 0], [0, 255, 0], [0, 0, 255]]
+color_index = 0
+color = colors[color_index]
 
 try:
     # Clear the screen
@@ -72,6 +74,12 @@ try:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 raise KeyboardInterrupt
+            elif event.type == pygame.JOYBUTTONDOWN:
+                if event.button == 2:  # B button pressed
+                    # Toggle through the colors
+                    color_index = (color_index + 1) % len(colors)
+                    color = colors[color_index]
+                    print_at(1, 2, f"Color changed to: {color}")
 
         # Move the pixel based on joystick input
         pos = move_pixel(joystick, pos, rotation)

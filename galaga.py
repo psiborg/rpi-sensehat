@@ -37,6 +37,8 @@ fighter_pos = 3  # Fighter starts in the middle of the bottom row
 aliens = []
 bullets = []
 game_over = False
+shots_fired = 0  # Track how many shots were fired
+shots_hit = 0  # Track how many shots hit an alien
 
 # Colors
 fighter_color = (0, 255, 0)
@@ -71,10 +73,12 @@ def move_fighter(direction):
         fighter_pos += 1
 
 def fire_bullet():
+    global shots_fired
     bullets.append([fighter_pos, 6])  # Fire bullet from just above the fighter
+    shots_fired += 1  # Increment shots fired
 
 def move_bullets():
-    global score
+    global score, shots_hit
     for bullet in bullets:
         bullet[1] -= 1
         if bullet[1] < 0:  # If bullet is off the screen
@@ -86,6 +90,7 @@ def move_bullets():
                     aliens.remove(alien)
                     bullets.remove(bullet)
                     score += 1
+                    shots_hit += 1  # Increment shots hit
                     break
 
 def spawn_alien():
@@ -149,7 +154,12 @@ try:
         sleep(0.1)  # Game speed
 
     # Game Over
-    print(f"Game Over! Final Score: {score}")
+    accuracy = (shots_hit / shots_fired) * 100 if shots_fired > 0 else 0
+    print(f"Game Over!")
+    print(f"Final Score: {score}")
+    print(f"Shots Fired: {shots_fired}")
+    print(f"Shots Hit: {shots_hit}")
+    print(f"Accuracy: {accuracy:.2f}%")
     sense.show_message(f"Score: {score}", text_colour=[255, 0, 0])
     sense.clear()
 
