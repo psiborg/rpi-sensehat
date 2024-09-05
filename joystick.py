@@ -32,25 +32,40 @@ def move_pixel(dx, dy):
     elif rotation == 270:
         dx, dy = -dy, dx
 
+    print(f"move_pixel: ({dx}, {dy}), rotation: {rotation}")
+
     new_x, new_y = clamp(x + dx), clamp(y + dy)
 
     # Update the position
     x, y = new_x, new_y
 
-def pushed_up(event=None):
-    move_pixel(0, -1)
+def pushed_up(event):
+    if event.action == "pressed":
+        print("pushed_up")
+        move_pixel(0, -1)
+        refresh()
 
-def pushed_down(event=None):
-    move_pixel(0, 1)
+def pushed_down(event):
+    if event.action == "pressed":
+        print("pushed_down")
+        move_pixel(0, 1)
+        refresh()
 
-def pushed_left(event=None):
-    move_pixel(-1, 0)
+def pushed_left(event):
+    if event.action == "pressed":
+        print("pushed_left")
+        move_pixel(-1, 0)
+        refresh()
 
-def pushed_right(event=None):
-    move_pixel(1, 0)
+def pushed_right(event):
+    if event.action == "pressed":
+        print("pushed_right")
+        move_pixel(1, 0)
+        refresh()
 
 def refresh(event=None):
-    #sense.clear()  # comment out this line to leave a trail
+    print(f"refresh: {x}, {y}")
+    sense.clear()  # comment out this line to leave a trail
     sense.set_pixel(x, y, 255, 255, 255)
 
 print("Instructions:")
@@ -61,7 +76,7 @@ sense.stick.direction_up = pushed_up
 sense.stick.direction_down = pushed_down
 sense.stick.direction_left = pushed_left
 sense.stick.direction_right = pushed_right
-sense.stick.direction_any = refresh
+#sense.stick.direction_any = refresh
 
 try:
     refresh()
