@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+# ========================================================================
+# pygame_joystick.py
+#
+# Description:
+#
+# pip3 install pygame
+#
+# Author: Jim Ing
+# Date: 2024-09-03
+# ========================================================================
 
 import os
 import pygame
@@ -13,12 +23,13 @@ def print_at(x, y, text):
 def print_two_column(info1, info2):
     # Display two columns side by side, info1 on the left and info2 on the right
     for i, (line1, line2) in enumerate(zip(info1.split('\n'), info2.split('\n'))):
-        print_at(1, 5 + i, f"{line1:<40}{line2}")
+        print_at(1, 2 + i, f"{line1:<40}{line2}")
 
 def main():
     joysticks = {}
 
     done = False
+
     while not done:
         os.system('clear')  # Clear the screen
 
@@ -27,27 +38,27 @@ def main():
                 done = True
 
             if event.type == pygame.JOYBUTTONDOWN:
-                print_at(1, 3, "Joystick button: pressed")
+                #print_at(1, 3, "Joystick button: pressed")
                 if event.button == 0:
                     joystick = joysticks[event.instance_id]
-                    if joystick.rumble(0, 0.7, 500):
-                        print_at(1, 1, f"Rumble effect played on joystick {event.instance_id}")
+                    #if joystick.rumble(0, 0.7, 500):
+                        #print_at(1, 1, f"Rumble effect played on joystick {event.instance_id}")
 
-            if event.type == pygame.JOYBUTTONUP:
-                print_at(1, 3, "Joystick button: released")
+            #if event.type == pygame.JOYBUTTONUP:
+                #print_at(1, 3, "Joystick button: released")
 
             # Handle hotplugging
             if event.type == pygame.JOYDEVICEADDED:
                 joy = pygame.joystick.Joystick(event.device_index)
                 joysticks[joy.get_instance_id()] = joy
-                print_at(1, 2, f"Joystick {joy.get_instance_id()} connected")
+                #print_at(1, 2, f"Joystick {joy.get_instance_id()} connected")
 
             if event.type == pygame.JOYDEVICEREMOVED:
                 del joysticks[event.instance_id]
-                print_at(1, 2, f"Joystick {event.instance_id} disconnected")
+                #print_at(1, 2, f"Joystick {event.instance_id} disconnected")
 
         joystick_count = pygame.joystick.get_count()
-        print_at(1, 4, f"Number of joysticks: {joystick_count}")
+        print_at(1, 1, f"Number of joysticks: {joystick_count}")
 
         # Create empty strings for joystick info
         info_left = ""
@@ -71,13 +82,13 @@ def main():
             info += f"    Number of axes: {axes}\n"
             for i in range(axes):
                 axis = joystick.get_axis(i)
-                info += f"      Axis {i} value: {axis:>6.3f}\n"
+                info += f"      Axis {i} value: \033[32m{axis:>6.3f}\033[0m\n"
 
             buttons = joystick.get_numbuttons()
             info += f"    Number of buttons: {buttons}\n"
             for i in range(buttons):
                 button = joystick.get_button(i)
-                info += f"      Button {i:>2} value: {button}\n"
+                info += f"      Button {i:>2} value: \033[36m{button}\033[0m\n"
 
             hats = joystick.get_numhats()
             info += f"    Number of hats: {hats}\n"
@@ -104,9 +115,6 @@ if __name__ == "__main__":
         pygame.quit()
 
 '''
-Rumble effect played on joystick
-Joystick 1 connected
-Joystick button: pressed
 Number of joysticks: 2
 Joystick 0                              Joystick 1
     Joystick name: USB Gamepad              Joystick name: USB Gamepad
@@ -127,4 +135,18 @@ Joystick 0                              Joystick 1
       Button  8 value: 0                      Button  8 value: 0
       Button  9 value: 0                      Button  9 value: 0
     Number of hats: 0                       Number of hats: 0
+
+Explanation:
+  \033[{color_code}m: This ANSI escape sequence sets the text color. color_code is the code for the color you want (e.g., 31 for red, 32 for green, etc.).
+  \033[0m: Resets the formatting to default after printing the text to prevent coloring the rest of the terminal output.
+
+Common Color Codes:
+  30: Black
+  31: Red
+  32: Green
+  33: Yellow
+  34: Blue
+  35: Magenta
+  36: Cyan
+  37: White (default)
 '''
