@@ -19,15 +19,18 @@ class Sprites:
 
         R = (255, 0, 0)     # Red
         S = (99, 0, 0)      # Dark Faded Red
-        T = (33, 0, 0)      # Obscure Weak Red
+        #T = (33, 0, 0)      # Obscure Weak Red
+        T = (0, 0, 0)       # Obscure Weak Red
 
         G = (0, 255, 0)     # Green
         H = (0, 99, 0)      # Dark Faded Green
-        I = (0, 33, 0)      # Obscure Weak Green
+        #I = (0, 33, 0)      # Obscure Weak Green
+        I = (0, 0, 0)       # Obscure Weak Green
 
         B = (0, 0, 255)     # Blue
         C = (0, 0, 99)      # Dark Faded Blue
-        D = (0, 0, 33)      # Obscure Weak Blue
+        #D = (0, 0, 33)      # Obscure Weak Blue
+        D = (0, 0, 0)       # Obscure Weak Blue
 
         # Frame definitions:
         '''
@@ -294,6 +297,6 @@ sprites = Sprites()
 
 # Start the animation
 try:
-    animate(sprites, delay=0.2)  # Adjust delay for animation speed
+    animate(sprites, delay=0.15)  # Adjust delay for animation speed
 except KeyboardInterrupt:
     sense.clear()
