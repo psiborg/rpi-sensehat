@@ -71,6 +71,14 @@ def print_debug(message):
     if debug:
         print(message)
 
+def print_instructions():
+    """Print instructions for Rubik's Cube."""
+    print("\nSense HAT Joystick:")
+    print("Middle: Toggle cube faces, Left = Counter Clockwise, Right = Clockwise")
+    print("\nCube Notation:")
+    print("Clockwise: U = Up/Top, L = Left, F = Front, R = Right, B = Back, D = Down/Bottom")
+    print("Counter Clockwise: U' = Up/Top, L' = Left, F' = Front, R' = Right, B' = Back, D' = Down/Bottom")
+
 def draw_cube():
     """Display the current state of the cube."""
     sense.set_pixels(layout)
@@ -191,6 +199,9 @@ try:
     # Scramble the cube if --scramble=n is passed
     if args.scramble > 0:
         scramble_cube(args.scramble)
+
+        # Print instructions
+        print_instructions()
 
     # Initial drawing
     draw_cube()
