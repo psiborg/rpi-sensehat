@@ -2,7 +2,9 @@
 # ========================================================================
 # rubiks.py
 #
-# Description:
+# Description: A 2x2 Rubik's cube displayed in a 2D flat layout.
+#
+# https://rubiks-cube-solver.com/2x2/
 #
 # Author: Jim Ing
 # Date: 2024-09-10
@@ -21,14 +23,6 @@ Y = (102, 102, 0)    # Yellow
 O = (153, 51, 0)     # Orange
 K = (0, 0, 0)        # Black (empty)
 
-# Brighter versions for highlighting
-bright_W = (255, 255, 255)  # White
-bright_R = (255, 0, 0)      # Red
-bright_G = (0, 255, 0)      # Green
-bright_B = (0, 0, 255)      # Blue
-bright_Y = (255, 255, 0)    # Yellow
-bright_O = (255, 102, 0)    # Orange
-
 # Initial layout (2x2 cube faces)
 layout = [
     K, K, K, K, K, K, K, K,
@@ -41,11 +35,24 @@ layout = [
     K, K, K, K, K, K, K, K
 ]
 
+# Faces and their indices on the 8x8 matrix
+faces = {
+    0: [(1, 2), (1, 3), (2, 2), (2, 3)],  # Yellow = Top
+    1: [(3, 0), (3, 1), (4, 0), (4, 1)],  # Green = Left
+    2: [(3, 2), (3, 3), (4, 2), (4, 3)],  # Orange = Front
+    3: [(3, 4), (3, 5), (4, 4), (4, 5)],  # Blue = Right
+    4: [(3, 6), (3, 7), (4, 6), (4, 7)],  # Red = Back
+    5: [(5, 2), (5, 3), (6, 2), (6, 3)]   # White = Bottom
+}
+
 # Move counter
 move_counter = 0
 
-# Selected face index (0 = Yellow, 1 = Green, 2 = Orange, 3 = Blue, 4 = Red, 5 = White)
+# Selected face index
 selected_face = 0
+
+# Dictionary to store the current colors of the face before highlighting
+original_face_colors = {}
 
 # Debug flag
 debug = False
@@ -61,55 +68,65 @@ def print_debug(message):
     if debug:
         print(message)
 
-# Faces and their indices on the 8x8 matrix
-faces = {
-    0: [(1, 2), (1, 3), (2, 2), (2, 3)],  # Yellow
-    1: [(3, 0), (3, 1), (4, 0), (4, 1)],  # Green
-    2: [(3, 2), (3, 3), (4, 2), (4, 3)],  # Orange
-    3: [(3, 4), (3, 5), (4, 4), (4, 5)],  # Blue
-    4: [(3, 6), (3, 7), (4, 6), (4, 7)],  # Red
-    5: [(5, 2), (5, 3), (6, 2), (6, 3)]   # White
-}
-
-# Color mapping for faces
-face_colors = [Y, G, O, B, R, W]
-
-# Brighter colors for highlighting
-bright_face_colors = [bright_Y, bright_G, bright_O, bright_B, bright_R, bright_W]
-
 def draw_cube():
     """Display the current state of the cube."""
     sense.set_pixels(layout)
 
+def brighten_color(color):
+    """Increase the brightness of an RGB color by scaling each component."""
+    factor = 1.5  # Brighten by 50%
+    return tuple(min(int(c * factor), 255) for c in color)
+
 def highlight_face(face_idx):
-    """Highlight the selected face."""
+    """Highlight the selected face by brightening each pixel in the face and saving the current face colors."""
     face = faces[face_idx]
+
+    # Save the current colors of the face before highlighting
+    original_face_colors[face_idx] = [layout[x * 8 + y] for (x, y) in face]
+
+    # Brighten each pixel in the face
     for (x, y) in face:
-        layout[x * 8 + y] = bright_face_colors[face_idx]
+        current_color = layout[x * 8 + y]  # Get the current color
+        layout[x * 8 + y] = brighten_color(current_color)  # Apply the brightened color
 
 def dehighlight_face(face_idx):
-    """Remove the highlight from the selected face."""
+    """Remove the highlight from the selected face by restoring its saved original colors."""
     face = faces[face_idx]
-    for (x, y) in face:
-        layout[x * 8 + y] = face_colors[face_idx]
+
+    # Restore the original colors if they were saved
+    if face_idx in original_face_colors:
+        for i, (x, y) in enumerate(face):
+            layout[x * 8 + y] = original_face_colors[face_idx][i]
+
+        # After restoring, clear the stored original colors for this face
+        original_face_colors.pop(face_idx, None)
 
 def rotate_face(face_idx, direction):
-    """Rotate the selected face clockwise or counterclockwise."""
-    face = faces[face_idx]
-    face_data = [layout[x * 8 + y] for (x, y) in face]
+    # Define the side indices for each face
+    face_sides = {
+        0: [30, 31, 24, 25, 26, 27, 28, 29],  # Top face
+        1: [18, 10, 31, 39, 50, 42, 34, 26],  # Left face
+        2: [19, 18, 25, 33, 42, 43, 36, 28],  # Front face
+        3: [11, 19, 27, 35, 43, 51, 38, 30],  # Right face
+        4: [10, 11, 29, 37, 51, 50, 32, 24],  # Back face
+        5: [35, 34, 33, 32, 39, 38, 37, 36],  # Bottom face
+    }
 
+    # Get the current face's sides
+    sides = face_sides[face_idx]
+
+    # Extract the RGB values for the current side
+    current_values = [layout[i] for i in sides]
+
+    # Rotate sides based on direction
     if direction == 'right':
-        # Rotate clockwise
-        layout[face[0][0] * 8 + face[0][1]] = face_data[2]
-        layout[face[1][0] * 8 + face[1][1]] = face_data[0]
-        layout[face[2][0] * 8 + face[2][1]] = face_data[3]
-        layout[face[3][0] * 8 + face[3][1]] = face_data[1]
+        rotated_values = [current_values[-2], current_values[-1]] + current_values[:-2]
     elif direction == 'left':
-        # Rotate counterclockwise
-        layout[face[0][0] * 8 + face[0][1]] = face_data[1]
-        layout[face[1][0] * 8 + face[1][1]] = face_data[3]
-        layout[face[2][0] * 8 + face[2][1]] = face_data[0]
-        layout[face[3][0] * 8 + face[3][1]] = face_data[2]
+        rotated_values = current_values[2:] + [current_values[0], current_values[1]]
+
+    # Update layout with the rotated values
+    for i in range(8):
+        layout[sides[i]] = rotated_values[i]
 
 def joystick_moved(event):
     global selected_face, move_counter
