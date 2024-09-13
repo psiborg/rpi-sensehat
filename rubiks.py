@@ -11,6 +11,7 @@
 # ========================================================================
 
 import argparse
+import random
 from time import sleep
 from config import sense
 
@@ -45,8 +46,9 @@ faces = {
     5: [(5, 2), (5, 3), (6, 2), (6, 3)]   # White = Bottom
 }
 
-# Move counter
+# Move counter and scramble
 move_counter = 0
+scramble_moves = []
 
 # Selected face index
 selected_face = 0
@@ -60,6 +62,7 @@ debug = False
 # Argument parser for command line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--debug', action='store_true', help='Enable debug output')
+parser.add_argument('--scramble', type=int, default=0, help='Number of moves to scramble the cube')
 args = parser.parse_args()
 if args.debug:
     debug = True
@@ -101,7 +104,7 @@ def dehighlight_face(face_idx):
         # After restoring, clear the stored original colors for this face
         original_face_colors.pop(face_idx, None)
 
-def rotate_face(face_idx, direction):
+def rotate_face(face_idx, direction, record_move=True):
     # Define the side indices for each face
     face_sides = {
         0: [30, 31, 24, 25, 26, 27, 28, 29],  # Top face
@@ -121,12 +124,20 @@ def rotate_face(face_idx, direction):
     # Rotate sides based on direction
     if direction == 'right':
         rotated_values = [current_values[-2], current_values[-1]] + current_values[:-2]
+        move_notation = ['U', 'L', 'F', 'R', 'B', 'D'][face_idx] + "'"
     elif direction == 'left':
         rotated_values = current_values[2:] + [current_values[0], current_values[1]]
+        move_notation = ['U', 'L', 'F', 'R', 'B', 'D'][face_idx]
 
     # Update layout with the rotated values
     for i in range(8):
         layout[sides[i]] = rotated_values[i]
+
+    # Record move if it's not a scramble step
+    if record_move:
+        scramble_moves.append(move_notation)
+
+    print(f"Move: {move_notation}")
 
 def joystick_moved(event):
     global selected_face, move_counter
@@ -158,7 +169,29 @@ def joystick_moved(event):
         print(f'Moves: {move_counter}')
         draw_cube()
 
+def scramble_cube(n):
+    """Scramble the cube with n random moves."""
+    directions = ['left', 'right']
+    for _ in range(n):
+        face_idx = random.randint(0, 5)
+        direction = random.choice(directions)
+        rotate_face(face_idx, direction, record_move=False)
+    print(f"Scrambled the cube with {n} moves.")
+
+def is_solved():
+    """Check if the cube is solved."""
+    # Check if all colors on each face are uniform
+    for face_idx, positions in faces.items():
+        colors = [layout[x * 8 + y] for (x, y) in positions]
+        if len(set(colors)) > 1:  # If there are different colors
+            return False
+    return True
+
 try:
+    # Scramble the cube if --scramble=n is passed
+    if args.scramble > 0:
+        scramble_cube(args.scramble)
+
     # Initial drawing
     draw_cube()
 
@@ -172,6 +205,9 @@ try:
     # Keep the program running
     while True:
         sleep(0.1)
+        if args.scramble > 0 and is_solved():
+            print("Congratulations! The cube is solved!")
+            break
 
 except KeyboardInterrupt:
     sense.clear()
