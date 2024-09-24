@@ -69,7 +69,7 @@ The game proceeds by updating the grid in discrete steps (or generations). Each 
 sudo apt install sense-hat
 ```
 
-4. Place the config.py file (which initializes the sense object) in the same directory as the script.
+Place the config.py file (which initializes the sense object) in the same directory as the script.
 
 
 ## Usage
@@ -77,7 +77,7 @@ sudo apt install sense-hat
 Run the script using Python and optionally specify a pattern to start the game with.
 
 ```bash
-python game_of_life.py [--pattern PATTERN]
+python conway.py [--pattern PATTERN]
 ```
 
 ### Available Patterns
@@ -98,7 +98,7 @@ You can start the game with one of the following predefined patterns that fit wi
 For example, to start with a glider:
 
 ```bash
-python game_of_life.py --pattern glider
+python conway.py --pattern glider
 ```
 
 If no pattern is specified, the grid will be randomly populated.
@@ -128,12 +128,12 @@ During each generation, the grid is printed to the console in a simplified forma
 For example, a grid with a pattern might appear like this:
 
 ```txt
-........
-........
-........
-...R....
-..BGB...
-...R....
+RB....BR
+RR....RR
+R.G..G.R
+R.G..G.R
+RR....RR
+RB....BR
 ........
 ........
 ```
