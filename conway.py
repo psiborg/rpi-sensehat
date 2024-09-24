@@ -122,6 +122,9 @@ def game_of_life(pattern=None):
     previous_grids = []
     previous_color_grid = None  # To track the color state for each cell
 
+    print("Initial grid:")
+    print_grid(grid, previous_color_grid)
+
     while generation < MAX_GENERATIONS:
         display_grid(grid, previous_color_grid)
         time.sleep(1)
@@ -130,11 +133,11 @@ def game_of_life(pattern=None):
 
         # Check stability
         if new_grid in previous_grids:
-            print(f"Stable pattern reached at generation {generation}")
+            print(f"Stable pattern reached at generation {generation}:")
             print_grid(grid, previous_color_grid)
             break
         if sum(map(sum, new_grid)) == 0:
-            print(f"All cells dead at generation {generation}")
+            print(f"All cells dead at generation {generation}:")
             print_grid(grid, previous_color_grid)
             break
 
@@ -148,7 +151,7 @@ def game_of_life(pattern=None):
         generation += 1
 
     if generation >= MAX_GENERATIONS:
-        print(f"Reached {MAX_GENERATIONS} generations.")
+        print(f"Reached {MAX_GENERATIONS} generations:")
         print_grid(grid, previous_color_grid)
 
     time.sleep(20)  # Pause before resetting
