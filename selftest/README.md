@@ -24,7 +24,7 @@ Once the program has finished, the overall status will be displayed on the LED m
 
 - A red pixel is used to identify a test which failed.
 
-![LED Status](led_status.jpg "LED Status")
+![LED Status](led_status.jpg)
 
 ## References
 

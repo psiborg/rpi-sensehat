@@ -1,8 +1,15 @@
 # Juggle Sprites
 
+![Juggling Grid](./images/juggling_grid.png)
+
+---
+
 Regex Search: W|R|S|T|G|H|I|B|C|D
 
+---
+
 ## Pattern
+
             [
                 K, K, K, W, W, K, K, K,
                 K, K, W, W, W, W, K, K,

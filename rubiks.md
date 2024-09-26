@@ -87,6 +87,8 @@ The cube layout is represented by an 8x8 LED matrix. Each face of the cube occup
 - Red: Back
 - White: Bottom
 
+![Rubiks 2x2 Flat Layout](./images/rubiks_2x2.png)
+
 ### Highlighting
 
 The current face is highlighted by brightening its colors on the LED matrix, making it easier to identify.
