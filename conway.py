@@ -11,7 +11,25 @@
 import random
 import time
 import argparse
+import logging
 from config import sense
+
+# Setup logging to file
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+# Create handlers for file
+file_handler = logging.FileHandler('conway.log')
+
+# Set level
+file_handler.setLevel(logging.INFO)
+
+# Create a logging format
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+
+# Add handler to the logger
+logger.addHandler(file_handler)
 
 # Constants
 WIDTH, HEIGHT = 8, 8
@@ -99,8 +117,9 @@ def display_grid(grid, previous_grid):
                 pixels.append(BLACK)
     sense.set_pixels(pixels)
 
-# Print grid to console
+# Print grid to console and log it
 def print_grid(grid, previous_grid):
+    lines = "\n"
     for y in range(HEIGHT):
         line = ""
         for x in range(WIDTH):
@@ -113,7 +132,8 @@ def print_grid(grid, previous_grid):
                 line += "R"  # Red (dying)
             else:
                 line += "."  # Blank for dead cells
-        print(line)
+        lines += line + "\n"
+    logging.info(lines)  # Log the grid line
 
 # Main game loop
 def game_of_life(pattern=None):
@@ -122,7 +142,7 @@ def game_of_life(pattern=None):
     previous_grids = []
     previous_color_grid = None  # To track the color state for each cell
 
-    print("Initial grid:")
+    logging.info("Initial grid:")
     print_grid(grid, previous_color_grid)
 
     while generation < MAX_GENERATIONS:
@@ -133,11 +153,11 @@ def game_of_life(pattern=None):
 
         # Check stability
         if new_grid in previous_grids:
-            print(f"Stable pattern reached at generation {generation}:")
+            logging.info(f"Stable pattern reached at generation {generation}:")
             print_grid(grid, previous_color_grid)
             break
         if sum(map(sum, new_grid)) == 0:
-            print(f"All cells dead at generation {generation}:")
+            logging.info(f"All cells dead at generation {generation}:")
             print_grid(grid, previous_color_grid)
             break
 
@@ -151,12 +171,11 @@ def game_of_life(pattern=None):
         generation += 1
 
     if generation >= MAX_GENERATIONS:
-        print(f"Reached {MAX_GENERATIONS} generations:")
+        logging.info(f"Reached {MAX_GENERATIONS} generations:")
         print_grid(grid, previous_color_grid)
 
     time.sleep(20)  # Pause before resetting
     sense.clear()
-
 
 if __name__ == "__main__":
     try:
