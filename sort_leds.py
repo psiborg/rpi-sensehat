@@ -72,7 +72,12 @@ PALETTES = {
 }
 
 def partition(values, low, high):
-    # Partition logic remains unchanged
+    """
+    Partition is a helper function used in the Quick Sort algorithm.
+    Its purpose is to rearrange elements in a sublist so that all elements
+    less than a chosen pivot value come before the pivot, and all elements
+    greater than or equal to the pivot come after it.
+    """
     pivot = values[high]
     i = low - 1
     moves = 0
