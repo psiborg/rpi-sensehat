@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # ========================================================================
-# sort_leds.py
+# sort_leds.py --algorithm bubble --palette wopr
 #
 # Description: Generates a random list of 8 values (1-8) representing
 #              colors and sorts them using the specified algorithm. Each
@@ -21,50 +21,69 @@ from termcolor import colored
 from config import sense
 sense.clear()
 
-# Standard 8 colors
-COLOR_NAMES = ["Gry", "Red", "Grn", "Yel", "Blu", "Mag", "Cyn", "Wht"]
-COLORS = [
-    (102, 102, 102), # Grey
-    (255, 0, 0),     # Red
-    (0, 255, 0),     # Green
-    (255, 255, 0),   # Yellow
-    (0, 0, 255),     # Blue
-    (255, 0, 255),   # Magenta
-    (0, 255, 255),   # Cyan
-    (255, 255, 255)  # White
-]
-
-COLOR_TERMCODES = {
-    "Gry": "dark_grey",
-    "Red": "red",
-    "Grn": "green",
-    "Yel": "yellow",
-    "Blu": "blue",
-    "Mag": "magenta",
-    "Cyn": "cyan",
-    "Wht": "white"
+# Color palettes
+PALETTES = {
+    "default": {
+        "names": ["Gry", "Red", "Grn", "Yel", "Blu", "Mag", "Cyn", "Wht"],
+        "colors": [
+            (102, 102, 102),  # Grey
+            (255, 0, 0),      # Red
+            (0, 255, 0),      # Green
+            (255, 255, 0),    # Yellow
+            (0, 0, 255),      # Blue
+            (255, 0, 255),    # Magenta
+            (0, 255, 255),    # Cyan
+            (255, 255, 255)   # White
+        ],
+        "termcodes": {
+            "Gry": "dark_grey",
+            "Red": "red",
+            "Grn": "green",
+            "Yel": "yellow",
+            "Blu": "blue",
+            "Mag": "magenta",
+            "Cyn": "cyan",
+            "Wht": "white"
+        }
+    },
+    "wopr": {
+        "names": ["Red", "Org", "Yel", "Grn", "Cyn", "Blu", "Pur", "Wht"],
+        "colors": [
+            (255, 0, 0),      # Red
+            (255, 165, 0),    # Orange
+            (255, 255, 0),    # Yellow
+            (0, 255, 0),      # Green
+            (0, 255, 255),    # Cyan
+            (0, 0, 255),      # Blue
+            (128, 0, 128),    # Purple
+            (255, 255, 255)   # White
+        ],
+        "termcodes": {
+            "Red": "red",
+            "Org": "yellow",  # Closest match for terminal
+            "Yel": "yellow",
+            "Grn": "green",
+            "Cyn": "cyan",
+            "Blu": "blue",
+            "Pur": "magenta",  # Closest match for terminal
+            "Wht": "white"
+        }
+    }
 }
 
 def partition(values, low, high):
-    """
-    Partition is a helper function used in the Quick Sort algorithm.
-    Its purpose is to rearrange elements in a sublist so that all elements
-    less than a chosen pivot value come before the pivot, and all elements
-    greater than or equal to the pivot come after it.
-    """
-    pivot = values[high]  # Select the pivot (typically the last element)
-    i = low - 1  # Pointer for the smaller element
-    moves = 0  # Track the number of swaps/moves
-
+    # Partition logic remains unchanged
+    pivot = values[high]
+    i = low - 1
+    moves = 0
     for j in range(low, high):
-        if values[j] < pivot:  # If current element is smaller than pivot
+        if values[j] < pivot:
             i += 1
-            values[i], values[j] = values[j], values[i]  # Swap elements
+            values[i], values[j] = values[j], values[i]
             moves += 1
-
-    values[i + 1], values[high] = values[high], values[i + 1]  # Place pivot in correct position
+    values[i + 1], values[high] = values[high], values[i + 1]
     moves += 1
-    return i + 1, moves  # Return pivot index and moves count
+    return i + 1, moves
 
 def bubble_sort(values):
     """Bubble Sort Algorithm."""
@@ -145,15 +164,16 @@ def draw_bars(matrix):
             sense.set_pixel(x, y, matrix[y][x])
     time.sleep(0.5)
 
-def display_colors(label, values):
+def display_colors(label, values, palette):
     """Displays colors as colored circles in the console."""
     print(f"{label:03}:", end=" ")
     for v in values:
-        print(colored("●", COLOR_TERMCODES[COLOR_NAMES[v - 1]]), end=" ")
+        print(colored("●", palette["termcodes"][palette["names"][v - 1]]), end=" ")
     print()
 
-def sorting_visualizer(algorithm):
+def sorting_visualizer(algorithm, palette_name):
     """Runs a visual sorting demonstration on the 8x8 LED matrix."""
+    palette = PALETTES[palette_name]
     while True:
         print(f"{algorithm.capitalize()} sort:")
         values = [random.randint(1, 8) for _ in range(8)]
@@ -161,38 +181,38 @@ def sorting_visualizer(algorithm):
 
         # Initialize first row with randomly selected colors
         for x in range(8):
-            matrix[0][x] = COLORS[values[x] - 1]
+            matrix[0][x] = palette["colors"][values[x] - 1]
 
         draw_bars(matrix)
-        display_colors(0, values)
+        display_colors(0, values, palette)
 
         row = 1
         sort_function = globals()[algorithm + "_sort"]
 
         for sorted_values, moves in sort_function(values):
-            if row % 8 == 0:  # Before wrapping back to the top row
-                sense.clear()  # Clear the LED matrix
-                matrix = [[(0, 0, 0) for _ in range(8)] for _ in range(8)]  # Reset matrix to black
+            if row % 8 == 0:
+                sense.clear()
+                matrix = [[(0, 0, 0) for _ in range(8)] for _ in range(8)]
 
             for x in range(8):
-                matrix[row % 8][x] = COLORS[sorted_values[x] - 1]
+                matrix[row % 8][x] = palette["colors"][sorted_values[x] - 1]
 
             draw_bars(matrix)
-            display_colors(row, sorted_values)
+            display_colors(row, sorted_values, palette)
             row += 1
 
         draw_bars(matrix)
         print()
         time.sleep(20)
-        sense.clear()  # Ensure the screen is cleared before restarting
+        sense.clear()
 
 if __name__ == "__main__":
     try:
         parser = argparse.ArgumentParser()
         parser.add_argument("--algorithm", choices=["bubble", "selection", "insertion", "quick", "cocktail_shaker"], default="bubble")
+        parser.add_argument("--palette", choices=PALETTES.keys(), default="default", help="Choose a color palette (default or wopr).")
         args = parser.parse_args()
-        sorting_visualizer(args.algorithm)
+        sorting_visualizer(args.algorithm, args.palette)
 
     except KeyboardInterrupt:
-        # Clear the LED matrix when exiting
         sense.clear()
