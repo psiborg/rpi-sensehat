@@ -47,26 +47,26 @@ PALETTES = {
         }
     },
     "wopr": {
-        "names": ["Red", "Org", "Yel", "Grn", "Cyn", "Blu", "Pur", "Wht"],
+        "names": ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"],
         "colors": [
-            (255, 0, 0),      # Red
-            (255, 165, 0),    # Orange
-            (255, 255, 0),    # Yellow
-            (0, 255, 0),      # Green
-            (0, 255, 255),    # Cyan
-            (0, 0, 255),      # Blue
-            (128, 0, 128),    # Purple
-            (255, 255, 255)   # White
+            (127, 0, 0),     # Dark Red
+            (255, 0, 0),     # Red
+            (255, 127, 0),   # Orange
+            (255, 127, 127), # Light Red
+            (255, 255, 0),   # Yellow
+            (255, 255, 127), # Pale Yellow
+            (127, 127, 0),   # Olive Green
+            (0, 127, 0)      # Dark Green
         ],
         "termcodes": {
-            "Red": "red",
-            "Org": "yellow",  # Closest match for terminal
-            "Yel": "yellow",
-            "Grn": "green",
-            "Cyn": "cyan",
-            "Blu": "blue",
-            "Pur": "magenta",  # Closest match for terminal
-            "Wht": "white"
+            "C1": "red",
+            "C2": "light_red",
+            "C3": "light_grey",
+            "C4": "white",
+            "C5": "yellow",
+            "C6": "light_yellow",
+            "C7": "green",
+            "C8": "light_green"
         }
     }
 }
