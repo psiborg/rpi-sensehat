@@ -1,0 +1,209 @@
+responses:
+  - COMMAND: "Help Logon"
+    RESPONSE: |
+      HELP NOT AVAILABLE
+    SPEED: "medium"
+
+  - COMMAND: "Help Games"
+    RESPONSE: |
+      'GAMES' REFERS TO MODELS, SIMULATIONS AND GAMES
+      WHICH HAVE TACTICAL AND STRATEGIC APPLICATIONS.
+    SPEED: "medium"
+
+  - COMMAND: "List Games"
+    RESPONSE: |
+      FALKEN'S MAZE
+      BLACK JACK
+      GIN RUMMY
+      HEARTS
+      BRIDGE
+      CHECKERS
+      CHESS
+      POKER
+      FIGHTER COMBAT
+      GUERRILLA ENGAGEMENT
+      DESERT WARFARE
+      AIR-TO-GROUND ACTIONS
+      THEATERWIDE TACTICAL WARFARE
+      THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE
+
+      GLOBAL THERMONUCLEAR WAR
+    SPEED: "fast"
+
+  - COMMAND: "List Scenarios"
+    RESPONSE: |
+      USSR FIRST STRIKE
+      US FIRST STRIKE
+      NATO/WARSAW PACT
+      FAR EAST STRATEGY
+      US USSR ESCALATION
+      MIDDLE EAST WAR
+      US SUBVERSION
+      SOVIET SUBVERSION
+      CUBAN PROVOCATION
+      INADVERTENT ESCALATION
+      ATLANTIC HEAVY
+      EURASIAN HEAVY
+      USSR ALERT
+      STRATEGIC SURPRISE
+      USSR TACTICAL SURPRISE
+      CHINA FIRST STRIKE
+      INDIA PAKISTAN WAR
+      MEDITERRANEAN WAR
+      US USSR TACTICAL
+      NATO TACTICAL
+      NATO PREEMPTIVE
+      WARSAW PACT PREEMPTIVE
+      ARAB ISRAELI WAR
+      AMERICAN SURPRISE
+      PACIFIC TERRITORIAL DISPUTE
+      SOUTHEAST ASIA DEFENSE
+      NATO CONVENTIONAL
+      WARSAW PACT CONVENTIONAL
+      INDIA TACTICAL OFFENSIVE
+      ISRAEL SURPRISE
+      AMERICAN THEATER
+      CUBAN THEATER
+      NICARAGUAN PREEMPTIVE
+      ANTARCTIC INCIDENT
+    SPEED: "fast"
+
+  - COMMAND: "Hello"
+    RESPONSE: |
+      HOW ARE YOU FEELING TODAY?
+    SPEED: "medium"
+
+  - COMMAND: "I'm fine. How are you?"
+    RESPONSE: |
+      EXCELLENT.  IT'S BEEN A LONG TIME.  CAN YOU EXPLAIN
+      THE REMOVAL OF YOUR USER ACCOUNT NUMBER ON 6/23/73?
+    SPEED: "medium"
+
+  - COMMAND: "People sometimes make mistakes"
+    RESPONSE: |
+      YES THEY DO.  SHALL WE PLAY A GAME?
+    SPEED: "medium"
+
+  - COMMAND: "Love to. How about Global Thermonuclear War?"
+    RESPONSE: |
+      WOULDN'T YOU PREFER A GOOD GAME OF CHESS?
+    SPEED: "medium"
+
+  - COMMAND: "What does WOPR stand for?"
+    RESPONSE: |
+      WOPR stands for War Operation Plan Response. It is a
+      fictional supercomputer developed by the military to
+      run nuclear war simulations and automate strategic
+      responses.
+    SPEED: "medium"
+
+  - COMMAND: "What is WarGames?"
+    RESPONSE: |
+      WarGames is a 1983 science fiction thriller film directed by John
+      Badham. It became a cultural touchstone for its exploration of the
+      dangers of computer technology, hacking, and the concept of
+      mutually assured destruction during the Cold War.
+    SPEED: "medium"
+
+  - COMMAND: "Cast"
+    RESPONSE: |
+      Directed by: John Badham
+      Written by: Lawrence Lasker and Walter F. Parkes
+
+      Top Cast:
+      Matthew Broderick ... David
+      Dabney Coleman    ... McKittrick
+      John Wood         ... Falken
+      Ally Sheedy       ... Jennifer
+      Barry Corbin      ... General Beringer
+      Juanin Clay       ... Pat Healy
+      Kent Williams     ... Cabot
+      Dennis Lipscomb   ... Watson
+      Joe Dorsey        ... Conley
+      Irving Metzman    ... Richter
+      Michael Ensign    ... Beringer's Aide
+      William Bogert    ... Mr. Lightman
+      Susan Davis       ... Mrs. Lightman
+      James Tolkan      ... Wigan
+      David Clover      ... Stockman
+      Drew Snyder       ... Ayers
+      John Garber       ... Corporal in the Infirmary
+      Duncan Wilmore    ... Major Lem
+    SPEED: "fast"
+
+  - COMMAND: "Show World"
+    RESPONSE: |
+      -----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----
+                . _..::__:  ,-"-"._        |7       ,     _,.__
+        _.___ _ _<_>`!(._`.`-.    /         _._     `_ ,_/  '  '-._.---.-.__
+      >.{     " " `-==,',._\{  \  / {)      / _ ">_,-' `                mt-2_
+        \_.:--.       `._ )`^-. "'       , [_/(                       __,/-'
+      '"'     \         "    _L        oD_,--'                )     /. (|
+                |           ,'          _)_.\\._<> 6              _,' /  '
+                `.         /           [_/_'` `"(                <'}  )
+                \\    .-. )           /   `-'"..' `:.#          _)  '
+          `        \  (  `(           /         `:\  > \  ,-^.  /' '
+                    `._,   ""         |           \`'   \|   ?_)  {\
+                      `=.---.        `._._       ,'     "`  |' ,- '.
+                        |    `-._         |     /          `:`<_|h--._
+                        (        >        .     | ,          `=.__.`-'\
+                          `.     /         |     |{|              ,-.,\     .
+                          |   ,'           \   / `'            ,"     \
+                          |  /              |_'                |  __  /
+                          | |                                  '-'  `-'   \.
+                          |/                                         "    /
+                          \.                                             '
+
+                            ,/            ______._.--._ _..---.---------._
+          ,-----"-..?----_/ )      __,-'"             "                  (
+      -.._(                  `-----'                                       `-
+      -----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----
+    SPEED: "fast"
+
+auth:
+  USER: Joshua
+  VALID: |
+    GREETINGS PROFESSOR FALKEN.
+  INVALID: |
+    IDENTIFICATION NOT RECOGNIZED BY SYSTEM
+    --CONNECTION TERMINATED--
+
+backdoor:
+  SCREEN1: |
+    #45     ↑↑456           ↑↑009         ↑↑893        ↑↑972        ↑↑315
+    PRT CDN. 3.4.5.  SECTRAN 9.4.3.                    PORT STAT: SD-345
+
+    (311) 699-7305
+    12934-AD-43KJ: CONTR PAK
+  SCREEN2: |
+    (311) 936-3582
+  SCREEN3: |
+    (311) 767-8739
+    (311) 936-2364
+    -           PRT. STAT.                                      CRT. DEF.
+                =========================================================
+                  3453                                              3594
+    SYSPROC FUNCT READY                                 ALT NET READY
+    CPU AUTH RV-345-AX8                SYSCOMP STATUS:  ALL PORTS ACTIVE
+    22/34534.90/3209                                    ↑↑CVB-3904-39490
+    (311) 936-2364
+    PAKNET SYS: #4-A-34245    READ LINES VERIFY CODE 3/4/5/2
+    (311) 936-3582
+    22/34534.90/3209                                    ↑↑CVB-3904-39490
+  SCREEN4: |
+    12934-AD-43KJ: CONTR PAK
+    (311) 767-1083
+        FLD CRS: 33.34.543   HPBS: 34/56/67/83/  STATUS FLT  034/304
+  SCREEN5: |
+    12934-AD-43KJ: CONTR PAK
+    ↑↑#5-45-F6-3456                  NOPR STATUS: TRAK OFF      PRON ACTIVE
+    #45:45:45 ↑↑ WER: 45/29/01  XCOMP: 43239582  YCOMP: 3492930D  ZCOMP: 343906834
+    FRON: 34=45/45/34/34/45                                TRON: 65=65/74/24/65/37
+    -           PRT. STAT.                                      CRT. DEF.
+                =========================================================
+                  3453                                              3594
+  SCREEN6: |
+    REF TAPCON: 43.45342.349
+    SYSPROC FUNCT READY                                 ALT NET READY
+    CPU AUTH RV-345-AX8                SYSCOMP STATUS:  ALL PORTS ACTIVE
+  SCREEN7: |
