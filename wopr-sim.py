@@ -22,6 +22,8 @@ import random
 import time
 import math
 import yaml
+import shutil
+import textwrap
 import threading
 from itertools import cycle
 
@@ -160,7 +162,7 @@ def led_kitt_scanner(stop_event, speed_multiplier):
     sense.clear()
 
 # Process a command
-def process_command(command, responses):
+def process_command(command, responses, width):
     command = command.lower()
     resp_found = False
     for entry in responses["responses"]:
@@ -178,7 +180,8 @@ def process_command(command, responses):
                 }
             ]
         )
-        return oresp.message.content, "fast"
+        formatted_text = textwrap.fill(oresp.message.content, width=width)
+        return formatted_text, "fast"
 
     return "COMMAND NOT RECOGNIZED.\n", "medium"
 
@@ -238,9 +241,11 @@ def main():
     invalid_msg = auth.get("INVALID", "ACCESS DENIED.")
     valid_msg = auth.get("VALID", "ACCESS GRANTED.")
 
+    terminal_width = shutil.get_terminal_size().columns
+
     print("WOPR SIMULATION STARTED. TYPE 'quit' OR 'exit' TO TERMINATE.\n")
 
-    print(f"LED: {args.led} | Ollama: {ollama_available} | SenseHAT: {sense_hat_available}")
+    print(f"Ollama: {ollama_available} | SenseHAT: {sense_hat_available} | LED: {args.led} | Width: {terminal_width}")
 
     print(random.choice(ascii_art))
 
@@ -284,7 +289,7 @@ def main():
             # Increase LED activity speed during command processing
             speed_multiplier[0] = 3
 
-            response, speed = process_command(command, responses)
+            response, speed = process_command(command, responses, terminal_width)
             type_out(response, speed)
 
             # Restore idle speed after command processing
