@@ -7,6 +7,29 @@ import time
 sense = SenseHat()
 sense.clear()
 
+sense.show_message("One small step for Pi!", text_colour=(255, 0, 0))
+time.sleep(5)
+
+sense.show_letter("a", text_colour=(255, 0, 0))
+time.sleep(2)
+sense.clear()
+
+sense.show_letter("b", text_colour=(0, 255, 0))
+time.sleep(2)
+sense.clear()
+
+sense.show_letter("c", text_colour=(0, 0, 255))
+time.sleep(2)
+sense.clear()
+
+#text = "Hello, World!"
+text = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+,-./:;<=>?@[\\]_|~"
+for index, char in enumerate(text):
+    #print(f"{char}")
+    sense.show_letter(char)
+    time.sleep(1)
+    sense.clear()
+
 # Test by setting the entire display
 pixels = [(255, 0, 0)] * 64  # all red
 sense.set_pixels(pixels)

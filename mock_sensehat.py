@@ -33,3 +33,13 @@ class SenseHat:
     def clear(self):
         """Clear the LED matrix."""
         return self.send_command("clear")
+
+    def show_message(self, message, text_colour=(255, 255, 255)):
+        """Display a scrolling message on the LED matrix."""
+        r, g, b = text_colour
+        return self.send_command(f"show_message {message} {r} {g} {b}")
+
+    def show_letter(self, letter, text_colour=(255, 255, 255)):
+        """Display a single letter on the LED matrix."""
+        r, g, b = text_colour
+        return self.send_command(f"show_letter {letter} {r} {g} {b}")
