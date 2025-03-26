@@ -67,28 +67,39 @@ class MockSenseHATServer:
         self.debug_print("Matrix redrawn")
 
     def show_message(self, message, color=(255, 255, 255), speed=0.2):
-        #print("show_message", message, color, speed)
-        """Displays a scrolling message on the matrix."""
-        # Convert message to a list of letter patterns
-        letter_patterns = [self.fonts.get(letter, self.fonts.get(" ")) for letter in message]
+        """Displays a scrolling message on the matrix with dynamic letter spacing."""
 
-        # Determine total width of the message (each letter is 8x8)
-        total_width = len(letter_patterns) * MATRIX_SIZE  # No extra space between letters
+        def get_char_width(pattern):
+            """Calculates the actual width of a character based on non-empty columns."""
+            width = 0
+            for col in range(MATRIX_SIZE):  # Check each column in 8x8 grid
+                if any(pattern[row * MATRIX_SIZE + col] != [0, 0, 0] for row in range(MATRIX_SIZE)):
+                    width = col + 1  # Extend width to this column
+            print("width", width)
+            return width
 
-        # Initialize an empty scrolling display
+        # Convert message to a list of (letter pattern, actual width)
+        letter_data = [(self.fonts.get(letter, [[0, 0, 0]] * MATRIX_SIZE**2),
+                        get_char_width(self.fonts.get(letter, [[0, 0, 0]] * MATRIX_SIZE**2)))
+                    for letter in message]
+
+        # Compute total width dynamically
+        total_width = sum(width + 1 for _, width in letter_data) - 1  # 1 pixel space between characters
+
+        # Initialize scrolling buffer (empty display)
         scroll_buffer = [[(0, 0, 0) for _ in range(total_width)] for _ in range(MATRIX_SIZE)]
 
-        # Fill scroll buffer with letter patterns
-        for idx, pattern in enumerate(letter_patterns):
+        # Fill scroll buffer using actual widths
+        x_offset = 0  # Track position in buffer
+        for pattern, width in letter_data:
             for i, pixel in enumerate(pattern):
                 x, y = i % MATRIX_SIZE, i // MATRIX_SIZE
-                #print(i, pixel)
-                if pixel == [255, 255, 255]:
-                    #print(i, "color", color)
-                    scroll_buffer[y][idx * MATRIX_SIZE + x] = color
-                else:
-                    #print(i, "pixel", tuple(pixel))
-                    scroll_buffer[y][idx * MATRIX_SIZE + x] = tuple(pixel)
+                if x < width:  # Only use non-empty part of the character
+                    if pixel == [255, 255, 255]:  # If pixel is white, apply color
+                        scroll_buffer[y][x_offset + x] = color
+                    else:
+                        scroll_buffer[y][x_offset + x] = tuple(pixel)
+            x_offset += width + 1  # Move to next character with 1 pixel spacing
 
         # Scroll the text across the matrix
         for offset in range(total_width - MATRIX_SIZE + 1):
@@ -96,7 +107,7 @@ class MockSenseHATServer:
                 for x in range(MATRIX_SIZE):
                     self.matrix[y][x] = scroll_buffer[y][offset + x]
             self.draw_matrix()
-            pygame.time.delay(int(speed * 500))
+            pygame.time.delay(int(speed * 500))  # Control scrolling speed
 
     def show_letter(self, letter, color=(255, 255, 255)):
         """Displays a single letter on the matrix using the fonts dictionary."""
