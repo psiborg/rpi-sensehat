@@ -6,6 +6,7 @@ class SenseHat:
     def __init__(self, host="localhost", port=9999):
         self.host = host
         self.port = port
+        self.available = True
 
     def send_command(self, command):
         """Send a command to the mock server."""
@@ -15,7 +16,8 @@ class SenseHat:
                 s.sendall(command.encode("utf-8"))
                 return s.recv(1024).decode("utf-8").strip()
         except ConnectionRefusedError:
-            print("Error: Could not connect to Sense HAT Mock Server. Make sure it's running.")
+            self.available = False
+            #print("Error: Could not connect to Sense HAT Mock Server. Make sure it's running.")
 
     def set_pixel(self, x, y, color):
         """Set a single LED pixel."""

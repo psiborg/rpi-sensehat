@@ -75,7 +75,7 @@ class MockSenseHATServer:
             for col in range(MATRIX_SIZE):  # Check each column in 8x8 grid
                 if any(pattern[row * MATRIX_SIZE + col] != [0, 0, 0] for row in range(MATRIX_SIZE)):
                     width = col + 1  # Extend width to this column
-            print("width", width)
+            #print("width", width)
             return width
 
         # Convert message to a list of (letter pattern, actual width)
@@ -211,7 +211,7 @@ class MockSenseHATServer:
                     break
 
     def shutdown(self, signal=None, frame=None):
-        print("\nShutting down the server gracefully...")
+        print("\nShutting down the server...")
         self.running = False
         if self.server_socket:
             self.server_socket.close()

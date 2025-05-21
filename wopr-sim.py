@@ -13,7 +13,8 @@ Requirements:
 - `PyYAML` for YAML parsing
 
 Setup:
-- On a Raspberry Pi, use:
+- On an OS (e.g., Raspberry Pi OS or Ubuntu), where the environment is externally managed, use:
+  sudo apt install python3-pygame
   pip install ollama --break-system-packages
 """
 
@@ -22,7 +23,9 @@ import random
 import time
 import math
 import yaml
+import pygame
 import shutil
+import sys
 import textwrap
 import threading
 from itertools import cycle
@@ -74,13 +77,25 @@ try:
     sense.low_light = True
     sense_hat_available = True
 except ImportError:
-    sense_hat_available = False
+    from mock_sensehat import SenseHat
+    sense = SenseHat()
+    sense.clear()
+    if (sense.available == True):
+        sense_hat_available = True
+    else:
+        sense_hat_available = False
 
 try:
     from ollama import chat
     ollama_available = True
 except ImportError:
     ollama_available = False
+
+# Initialize pygame mixer
+pygame.mixer.init()
+
+# Load the typing sound
+typing_sound = pygame.mixer.Sound("typing_sound.mp3")
 
 # Load YAML responses
 def load_responses(file_path="wopr-sim_responses.yaml"):
@@ -186,11 +201,15 @@ def process_command(command, responses, width):
     return "COMMAND NOT RECOGNIZED.\n", "medium"
 
 # Simulate typing effect
-def type_out(text, speed="medium"):
+def type_out(text, speed="medium", sound=True):
     speeds = {"slow": 0.1, "medium": 0.05, "fast": 0.01}
     delay = speeds.get(speed, 0.05)
     for char in text:
         print(char, end="", flush=True)
+        if sound:
+            #typing_sound.set_volume(0.5)  # Volume level between 0.0 and 1.0
+            typing_sound.play()
+            #typing_sound.play(maxtime=int(delay * 1000))  # maxtime is in milliseconds
         time.sleep(delay)
     print()
 
@@ -278,31 +297,41 @@ def main():
             speed_multiplier[0] = 1
         else:
             type_out(invalid_msg, "medium")
+            #sys.exit(1)  # Exit with a non-zero code to indicate failure
 
     try:
         while True:
-            command = input("> ").strip()
+            try:
+                command = input("> ").strip()
+            except EOFError:
+                # Handles end-of-file (e.g., Ctrl-D)
+                break
+
             if command.lower() in ["q", "quit", "x", "exit"]:
-                print("WOPR SIMULATION TERMINATED.\n")
                 break
 
             # Increase LED activity speed during command processing
             speed_multiplier[0] = 3
 
             response, speed = process_command(command, responses, terminal_width)
-            type_out(response, speed)
+            if speed == "fast":
+                type_out(response, speed, False)
+            else:
+                type_out(response, speed, True)
 
             # Restore idle speed after command processing
             speed_multiplier[0] = 1
 
     except KeyboardInterrupt:
-        print("\nWOPR SIMULATION TERMINATED.\n")
+        pass
 
     finally:
+        print("\nWOPR SIMULATION TERMINATED.\n")
         if sense_hat_available:
             stop_event.set()
             led_thread.join()
             sense.clear()
+            pygame.mixer.quit()
 
 if __name__ == "__main__":
     main()
